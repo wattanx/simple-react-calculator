@@ -28,6 +28,18 @@ test('divide Test', () => {
     expect(calculator.calculate('5', Operator.equal)).toBe('1');
 });
 
+test('divisionByZero Test1', () => {
+    const calculator = new Calculator();
+    expect(calculator.calculate('10', Operator.division)).toBe('10');
+    expect(calculator.calculate('0', Operator.division)).toBe('Error');
+});
+
+test('divisionByZero Test2', () => {
+    const calculator = new Calculator();
+    expect(calculator.calculate('0', Operator.division)).toBe('0');
+    expect(calculator.calculate('0', Operator.division)).toBe('Error');
+});
+
 test('percentage Test', () => {
     const calculator = new Calculator();
     expect(calculator.calculate('10', Operator.percentage)).toBe('0.1');

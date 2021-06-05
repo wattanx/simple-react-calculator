@@ -53,6 +53,12 @@ export class Calculator {
         return this.prevInputValue;
     }
 
+    private divide(value: string, operator: Operator): string {
+        this.prevInputValue = this.engine.divide(this.prevInputValue, value);
+        this.prevOperator = operator;
+        return this.prevInputValue;
+    }
+
     private calculateInner(value: string, operator: Operator): string {
         switch(operator){
             case Operator.addition:
@@ -61,6 +67,8 @@ export class Calculator {
                 return this.subtract(value, operator);
             case Operator.multiplication:
                 return this.multiply(value, operator);
+            case Operator.division:
+                return this.divide(value, operator);
             default:
                 return '';
         }
