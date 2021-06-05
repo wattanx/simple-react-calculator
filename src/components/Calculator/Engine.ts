@@ -16,7 +16,7 @@ export class Engine {
         return (parseFloat(prevValue) / parseFloat(value)).toString();
     }
 
-    public parcentage(value: string): string {
+    public percentage(value: string): string {
         return (parseFloat(value) / 100).toString();
     }
 

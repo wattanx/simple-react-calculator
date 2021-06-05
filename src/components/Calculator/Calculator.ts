@@ -20,6 +20,9 @@ export class Calculator {
     private engine = new Engine();
 
     public calculate(value: string, operator: Operator): string {
+        if (operator === Operator.percentage) {
+            return this.percentage(value);
+        }
         if (this.prevInputValue === '' && !this.prevOperator) {
             this.prevInputValue = value;
             this.prevOperator = operator;
@@ -57,6 +60,10 @@ export class Calculator {
         this.prevInputValue = this.engine.divide(this.prevInputValue, value);
         this.prevOperator = operator;
         return this.prevInputValue;
+    }
+
+    private percentage(value: string): string {
+        return this.engine.percentage(value);
     }
 
     private calculateInner(value: string, operator: Operator): string {
