@@ -41,8 +41,14 @@ export class Calculator {
         return this.prevInputValue;
     }
 
-    public subtract(value: string, operator: Operator): string {
+    private subtract(value: string, operator: Operator): string {
         this.prevInputValue = this.engine.subtract(this.prevInputValue, value);
+        this.prevOperator = operator;
+        return this.prevInputValue;
+    }
+
+    private multiply(value: string, operator: Operator): string {
+        this.prevInputValue = this.engine.multiply(this.prevInputValue, value);
         this.prevOperator = operator;
         return this.prevInputValue;
     }
@@ -53,6 +59,8 @@ export class Calculator {
                 return this.add(value, operator);
             case Operator.subtraction: 
                 return this.subtract(value, operator);
+            case Operator.multiplication:
+                return this.multiply(value, operator);
             default:
                 return '';
         }
