@@ -15,7 +15,7 @@ export const Operator = {
 type Operator = typeof Operator[keyof typeof Operator];
 
 export class Calculator {
-    private prevInputValue: string = '';
+    private prevInputValue: string = '0';
     private prevOperator: Operator;
     private engine = new Engine();
 
@@ -28,7 +28,7 @@ export class Calculator {
             return this.changeSign(value);
         }
 
-        if (this.prevInputValue === '' && !this.prevOperator) {
+        if (this.prevInputValue === '0' && !this.prevOperator) {
             this.prevInputValue = value;
             this.prevOperator = operator;
             return this.prevInputValue;
@@ -36,11 +36,16 @@ export class Calculator {
 
         if (operator === Operator.equal) {
             this.prevInputValue = this.calculateInner(value, this.prevOperator);
-            this.prevOperator = operator;
             return this.prevInputValue;
         }
 
         return this.calculateInner(value, operator);
+    }
+
+    public clear(): string {
+        this.prevInputValue = '0';
+        this.prevOperator = null;
+        return '0'
     }
 
     private add(value: string, operator: Operator): string {

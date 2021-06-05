@@ -5,6 +5,7 @@ test('addition Test', () => {
     expect(calculator.calculate('1', Operator.addition)).toBe('1');
     expect(calculator.calculate('1', Operator.addition)).toBe('2');
     expect(calculator.calculate('1', Operator.equal)).toBe('3');
+    expect(calculator.calculate('1', Operator.equal)).toBe('4');
 });
 
 test('subtract Test', () => {
@@ -50,4 +51,14 @@ test('ChangeSign Test', () => {
     const calculator = new Calculator();
     expect(calculator.calculate('10', Operator.sign)).toBe('-10');
     expect(calculator.calculate('-10', Operator.sign)).toBe('10');
+});
+
+test('clear Test', () => {
+    const calculator = new Calculator();
+    expect(calculator.calculate('10', Operator.division)).toBe('10');
+    expect(calculator.calculate('2', Operator.division)).toBe('5');
+    expect(calculator.calculate('5', Operator.equal)).toBe('1');
+    expect(calculator.clear()).toBe('0');
+    expect(calculator.calculate('10', Operator.division)).toBe('10');
+    expect(calculator.calculate('2', Operator.division)).toBe('5');
 });
