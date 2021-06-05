@@ -23,6 +23,11 @@ export class Calculator {
         if (operator === Operator.percentage) {
             return this.percentage(value);
         }
+
+        if (operator === Operator.sign) {
+            return this.changeSign(value);
+        }
+
         if (this.prevInputValue === '' && !this.prevOperator) {
             this.prevInputValue = value;
             this.prevOperator = operator;
@@ -64,6 +69,10 @@ export class Calculator {
 
     private percentage(value: string): string {
         return this.engine.percentage(value);
+    }
+
+    private changeSign(value: string): string {
+        return this.engine.changeSign(value);
     }
 
     private calculateInner(value: string, operator: Operator): string {
