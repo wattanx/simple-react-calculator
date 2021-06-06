@@ -12,7 +12,7 @@ export const Operator = {
     clear: 'C',
 } as const;
 
-type Operator = typeof Operator[keyof typeof Operator];
+export type Operator = typeof Operator[keyof typeof Operator];
 
 export class Calculator {
     private prevInputValue: string = '0';
