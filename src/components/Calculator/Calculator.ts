@@ -23,13 +23,9 @@ export class Calculator {
     private engine = new Engine();
 
     public calculate(value: string, operator: Operator): string {
-        if (operator === Operator.percentage) {
-            return this.percentage(value);
-        }
+        if (this.isPercentage(operator)) { return this.percentage(value); }
 
-        if (operator === Operator.sign) {
-            return this.changeSign(value);
-        }
+        if (this.isSign(operator)) { return this.changeSign(value); }
 
         if (this.prevInputValue === '0' && !this.prevOperator) {
             this.prevInputValue = value;
@@ -37,21 +33,20 @@ export class Calculator {
             return this.prevInputValue;
         }
 
-        if (operator === Operator.equal) {
-            if (this.prevOperator !== Operator.equal) {
-                this.prevInputValue = this.calculateInner(value, this.prevOperator);
-                this.repeatValue = value;
-                this.repeatOperator = this.prevOperator;
-                this.prevOperator = operator;
-                return this.prevInputValue;
-            } else {
-                this.prevInputValue = this.calculateInner(this.repeatValue, this.repeatOperator);
-                this.prevOperator = operator;
-                return this.prevInputValue;
-            }
+        if (this.isEqual(operator)) {
+            return this.handleEqualOperation(value, operator);
+        }
+
+        if (this.isEqual(this.prevOperator)) {
+            this.updatePreviousValue(value, operator);
+            return value;
         }
 
         return this.calculateInner(value, operator);
+    }
+
+    public setOperator(operator: Operator): void {
+        this.prevOperator = operator;
     }
 
     public clear(): string {
@@ -60,27 +55,13 @@ export class Calculator {
         return '0'
     }
 
-    private add(value: string, operator: Operator): string {
-        this.prevInputValue = this.engine.add(this.prevInputValue, value);
+    private updatePreviousValue(value: string, operator: Operator): void {
+        this.prevInputValue = value;
         this.prevOperator = operator;
-        return this.prevInputValue;
     }
 
-    private subtract(value: string, operator: Operator): string {
-        this.prevInputValue = this.engine.subtract(this.prevInputValue, value);
-        this.prevOperator = operator;
-        return this.prevInputValue;
-    }
-
-    private multiply(value: string, operator: Operator): string {
-        this.prevInputValue = this.engine.multiply(this.prevInputValue, value);
-        this.prevOperator = operator;
-        return this.prevInputValue;
-    }
-
-    private divide(value: string, operator: Operator): string {
-        this.prevInputValue = this.engine.divide(this.prevInputValue, value);
-        this.prevOperator = operator;
+    private handleOperation(result: string, operator: Operator): string {
+        this.updatePreviousValue(result, operator);
         return this.prevInputValue;
     }
 
@@ -95,15 +76,41 @@ export class Calculator {
     private calculateInner(value: string, operator: Operator): string {
         switch(operator){
             case Operator.addition:
-                return this.add(value, operator);
+                return this.handleOperation(this.engine.add(this.prevInputValue, value), operator);
             case Operator.subtraction: 
-                return this.subtract(value, operator);
+                return this.handleOperation(this.engine.subtract(this.prevInputValue, value), operator);
             case Operator.multiplication:
-                return this.multiply(value, operator);
+                return this.handleOperation(this.engine.multiply(this.prevInputValue, value), operator);
             case Operator.division:
-                return this.divide(value, operator);
+                return this.handleOperation(this.engine.divide(this.prevInputValue, value), operator);
             default:
-                return '';
+                return 'Error';
         }
+    }
+
+    private handleEqualOperation(value: string, operator: Operator): string {
+        if (!this.isEqual(this.prevOperator)) {
+            this.prevInputValue = this.calculateInner(value, this.prevOperator);
+            this.repeatValue = value;
+            this.repeatOperator = this.prevOperator;
+            this.prevOperator = operator;
+            return this.prevInputValue;
+        } else {
+            this.prevInputValue = this.calculateInner(this.repeatValue, this.repeatOperator);
+            this.prevOperator = operator;
+            return this.prevInputValue;
+        }
+    }
+
+    private isPercentage(oprator: Operator): boolean {
+        return oprator === Operator.percentage;
+    }
+
+    private isSign(oprator: Operator): boolean {
+        return oprator === Operator.sign;
+    }
+
+    private isEqual(operator: Operator): boolean {
+        return operator === Operator.equal;
     }
 }
