@@ -17,6 +17,9 @@ export type Operator = typeof Operator[keyof typeof Operator];
 export class Calculator {
     private prevInputValue: string = '0';
     private prevOperator: Operator;
+    private repeatValue: string = '0';
+    private repeatOperator: Operator;
+
     private engine = new Engine();
 
     public calculate(value: string, operator: Operator): string {
@@ -35,8 +38,17 @@ export class Calculator {
         }
 
         if (operator === Operator.equal) {
-            this.prevInputValue = this.calculateInner(value, this.prevOperator);
-            return this.prevInputValue;
+            if (this.prevOperator !== Operator.equal) {
+                this.prevInputValue = this.calculateInner(value, this.prevOperator);
+                this.repeatValue = value;
+                this.repeatOperator = this.prevOperator;
+                this.prevOperator = operator;
+                return this.prevInputValue;
+            } else {
+                this.prevInputValue = this.calculateInner(this.repeatValue, this.repeatOperator);
+                this.prevOperator = operator;
+                return this.prevInputValue;
+            }
         }
 
         return this.calculateInner(value, operator);

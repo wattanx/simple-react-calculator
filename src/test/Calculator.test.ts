@@ -5,7 +5,7 @@ test('addition Test', () => {
     expect(calculator.calculate('1', Operator.addition)).toBe('1');
     expect(calculator.calculate('1', Operator.addition)).toBe('2');
     expect(calculator.calculate('1', Operator.equal)).toBe('3');
-    expect(calculator.calculate('1', Operator.equal)).toBe('4');
+    expect(calculator.calculate('3', Operator.equal)).toBe('4');
 });
 
 test('subtract Test', () => {
