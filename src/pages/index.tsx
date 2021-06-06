@@ -1,7 +1,6 @@
-import { ReactCalculator } from '@src/components/ReactCalculator'
-import Link from 'next/link'
-import { createGlobalStyle } from 'styled-components'
-import Layout from '../components/Layout'
+import { ReactCalculator } from '@src/components/ReactCalculator';
+import Link from 'next/link';
+import { createGlobalStyle } from 'styled-components';
 
 const IndexPage = () => (
   <>
