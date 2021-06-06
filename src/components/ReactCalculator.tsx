@@ -1,50 +1,84 @@
+import { useState } from "react";
 import styled from "styled-components";
-import { Button } from "./Button";
+import { Button, ButtonBackgroundColor } from "./Button";
+import { Calculator, Operator } from "./Calculator/Calculator";
 import { Display } from './Display';
 
 type ComponentProps = {
-    onNumberClick: () => string;
-    onCalculate: () => string;
-    onClear: () => string;
+    onNumberClick: (input: string) => void;
+    onCalculate: (operator: Operator) => void;
+    onClear: () => void;
     isClearable: boolean;
+    value: string;
 }
 
+const calculator = new Calculator();
+
 export const ReactCalculator: React.FC = () => {
+    const [value, setValue] = useState<string>('0');
+    const [isOperationClicked, setOperationClicked] = useState<boolean>(false);
+    const [isClearable, setIsClearable] = useState<boolean>(false);
+    const onNumberClick = (input: string) => {
+        setIsClearable(true);
+        if (value === '0' && input !== '.') {
+            setValue(input);
+            return;
+        }
+        if (isOperationClicked) {
+            setValue(input);
+            setOperationClicked(false);
+            return;
+        }
+        setValue(value + input);
+    }
+
+    const onCalculate = (operator: Operator) => {
+        setOperationClicked(true);
+        const num = calculator.calculate(value, operator);
+        setValue(num);
+    }
+
+    const onClear = () => {
+        setIsClearable(false);
+        setValue(calculator.clear());
+    }
+
     return (
         <CalculatorComponent 
-          onCalculate={() => null}
-          onClear={() => null}
-          onNumberClick={() => null}
-          isClearable={true}/>
+          onCalculate={(operator: Operator) => onCalculate(operator)}
+          onClear={() => onClear()}
+          onNumberClick={(input: string) => onNumberClick(input)}
+          isClearable={isClearable}
+          value={value}/>
     )
 }
 
 const CalculatorComponent: React.FC<ComponentProps> = (props) => (
     <StyledDiv>
-        <Display />
-        <Button value={props.isClearable ? "C" : "AC"} onClick={() => null} backgroundColor="#434343" />
-        <Button value="+/-" onClick={() => null} backgroundColor="#434343" />
-        <Button value="%" onClick={() => null} backgroundColor="#434343" />
-        <Button value={"\u00F7"} onClick={() => null} backgroundColor="#f2a23c" />
+        <Display value={props.value}/>
+        <Button value={props.isClearable ? "C" : "AC"} onClick={() => props.onClear()} backgroundColor={ButtonBackgroundColor.Black} />
+        <Button value="+/-" onClick={() => props.onCalculate(Operator.sign)} backgroundColor={ButtonBackgroundColor.Black} />
+        <Button value="%" onClick={() => props.onCalculate(Operator.percentage)} backgroundColor={ButtonBackgroundColor.Black} />
+        <Button value={"\u00F7"} onClick={() => props.onCalculate(Operator.division)} backgroundColor={ButtonBackgroundColor.Orange} />
         <br />
-        <Button value="7" onClick={() => null} backgroundColor="#5d5e5e" />
-        <Button value="8" onClick={() => null} backgroundColor="#5d5e5e" />
-        <Button value="9" onClick={() => null} backgroundColor="#5d5e5e" />
-        <Button value="x" onClick={() => null} backgroundColor="#f2a23c" />
+        <Button value="7" onClick={() => props.onNumberClick('7')} backgroundColor={ButtonBackgroundColor.Gray} />
+        <Button value="8" onClick={() => props.onNumberClick('8')} backgroundColor={ButtonBackgroundColor.Gray} />
+        <Button value="9" onClick={() => props.onNumberClick('9')} backgroundColor={ButtonBackgroundColor.Gray} />
+        <Button value="x" onClick={() => props.onCalculate(Operator.multiplication)} backgroundColor={ButtonBackgroundColor.Orange} />
         <br />
-        <Button value="4" onClick={() => null} backgroundColor="#5d5e5e" />
-        <Button value="5" onClick={() => null} backgroundColor="#5d5e5e" />
-        <Button value="6" onClick={() => null} backgroundColor="#5d5e5e" />
-        <Button value="-" onClick={() => null} backgroundColor="#f2a23c" />
+        <Button value="4" onClick={() => props.onNumberClick('4')} backgroundColor={ButtonBackgroundColor.Gray} />
+        <Button value="5" onClick={() => props.onNumberClick('5')} backgroundColor={ButtonBackgroundColor.Gray} />
+        <Button value="6" onClick={() => props.onNumberClick('6')} backgroundColor={ButtonBackgroundColor.Gray} />
+        <Button value="-" onClick={() => props.onCalculate(Operator.subtraction)} backgroundColor={ButtonBackgroundColor.Orange} />
         <br />
-        <Button value="1" onClick={() => null} backgroundColor="#5d5e5e" />
-        <Button value="2" onClick={() => null} backgroundColor="#5d5e5e" />
-        <Button value="3" onClick={() => null} backgroundColor="#5d5e5e" />
-        <Button value="+" onClick={() => null} backgroundColor="#f2a23c" />
+        <Button value="1" onClick={() => props.onNumberClick('1')} backgroundColor={ButtonBackgroundColor.Gray} />
+        <Button value="2" onClick={() => props.onNumberClick('2')} backgroundColor={ButtonBackgroundColor.Gray} />
+        <Button value="3" onClick={() => props.onNumberClick('3')} backgroundColor={ButtonBackgroundColor.Gray} />
+        <Button value="+" onClick={() => props.onCalculate(Operator.addition)} backgroundColor={ButtonBackgroundColor.Orange} />
         <br />
-        <Button value="0" onClick={() => null} backgroundColor="#5d5e5e" isLarge={true} />
-        <Button value="." onClick={() => null} backgroundColor="#5d5e5e" />
-        <Button value="=" onClick={() => null} backgroundColor="#f2a23c" />
+        <Button value="0" onClick={() => props.onNumberClick('0')} backgroundColor={ButtonBackgroundColor.Gray} isLarge={true} />
+        <Button value="." onClick={() => props.onNumberClick('.')} backgroundColor={ButtonBackgroundColor.Gray} />
+        <Button value="=" onClick={() => props.onCalculate(Operator.equal)} backgroundColor={ButtonBackgroundColor.Orange} />
     </StyledDiv>
 );
 
