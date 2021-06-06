@@ -1,3 +1,4 @@
+import { useCalculate } from "@src/hooks/useCalculate";
 import { useState } from "react";
 import styled from "styled-components";
 import { Button, ButtonBackgroundColor } from "./Button";
@@ -12,36 +13,8 @@ type ComponentProps = {
     value: string;
 }
 
-const calculator = new Calculator();
-
 export const ReactCalculator: React.FC = () => {
-    const [value, setValue] = useState<string>('0');
-    const [isOperationClicked, setOperationClicked] = useState<boolean>(false);
-    const [isClearable, setIsClearable] = useState<boolean>(false);
-    const onNumberClick = (input: string) => {
-        setIsClearable(true);
-        if (value === '0' && input !== '.') {
-            setValue(input);
-            return;
-        }
-        if (isOperationClicked) {
-            setValue(input);
-            setOperationClicked(false);
-            return;
-        }
-        setValue(value + input);
-    }
-
-    const onCalculate = (operator: Operator) => {
-        setOperationClicked(true);
-        const num = calculator.calculate(value, operator);
-        setValue(num);
-    }
-
-    const onClear = () => {
-        setIsClearable(false);
-        setValue(calculator.clear());
-    }
+    const { value, isClearable, onCalculate, onClear, onNumberClick } = useCalculate();
 
     return (
         <CalculatorComponent 
