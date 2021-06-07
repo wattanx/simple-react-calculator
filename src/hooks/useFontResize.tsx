@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 
 export const useFontResize = (value: string) => {
     const divRef = useRef<HTMLDivElement>();
@@ -6,18 +6,20 @@ export const useFontResize = (value: string) => {
 
     const getFontSize = () => {
         return window.getComputedStyle(divRef.current, '').getPropertyValue('font-size');
-    }
+    };
 
     const reduceFontSize = () => {
-        if (divRef.current.clientWidth > spanRef.current.clientWidth + 40) { return; }
+        if (divRef.current.clientWidth > spanRef.current.clientWidth + 40) {
+            return;
+        }
 
         divRef.current.style.fontSize = parseFloat(getFontSize()) - 10 + 'px';
         reduceFontSize();
-    }
+    };
 
     const resetFontSize = () => {
         divRef.current.style.fontSize = '14vmin';
-    }
+    };
 
     useEffect(() => {
         resetFontSize();
@@ -26,6 +28,6 @@ export const useFontResize = (value: string) => {
 
     return {
         divRef,
-        spanRef
+        spanRef,
     };
-}
+};

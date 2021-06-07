@@ -1,5 +1,5 @@
-import { Calculator, Operator } from "@src/components/Calculator/Calculator";
-import { useState } from "react";
+import { Calculator, Operator } from '@src/components/Calculator/Calculator';
+import { useState } from 'react';
 
 const calculator = new Calculator();
 
@@ -16,33 +16,34 @@ export const useCalculate = () => {
             setValue(input);
             return;
         }
-        
-        if (input === '.' && value.includes('.')) { return; }
+
+        if (input === '.' && value.includes('.')) {
+            return;
+        }
 
         if (isOperationClicked) {
-            
             setValue(input);
             setOperationClicked(false);
             return;
         }
         setValue(value + input);
-    }
+    };
 
     const onCalculate = (operator: Operator) => {
         if (!isEdit && isBasicOperation(operator)) {
             calculator.setOperator(operator);
-            return; 
+            return;
         }
         setIsEdit(false);
         setOperationClicked(true);
         const num = calculator.calculate(value, operator);
         setValue(num);
-    }
+    };
 
     const onClear = () => {
         setIsClearable(false);
         setValue(calculator.clear());
-    }
+    };
 
     return {
         value,
@@ -50,15 +51,15 @@ export const useCalculate = () => {
         isOperationClicked,
         onCalculate,
         onNumberClick,
-        onClear
+        onClear,
     };
-}
+};
 
 const isBasicOperation = (operator: Operator): boolean => {
     return (
-      operator === Operator.addition
-      || operator === Operator.subtraction
-      || operator === Operator.multiplication
-      || operator === Operator.division
-    )
-}
+        operator === Operator.addition ||
+        operator === Operator.subtraction ||
+        operator === Operator.multiplication ||
+        operator === Operator.division
+    );
+};
