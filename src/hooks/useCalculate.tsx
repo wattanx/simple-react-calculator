@@ -5,24 +5,25 @@ const calculator = new Calculator();
 
 export const useCalculate = () => {
     const [value, setValue] = useState<string>('0');
-    const [isEdit, setIsEdit] = useState<boolean>(false);
     const [isOperationClicked, setOperationClicked] = useState<boolean>(false);
     const [isClearable, setIsClearable] = useState<boolean>(false);
 
     const onNumberClick = (input: string) => {
-        setIsEdit(true);
+        if (input === '.' && value.includes('.')) return;
+
         setIsClearable(true);
+
         if (value === '0' && input !== '.') {
             setValue(input);
             return;
         }
 
-        if (input === '.' && value.includes('.')) {
-            return;
-        }
-
         if (isOperationClicked) {
-            setValue(input);
+            if (input === '.') {
+                setValue(value + input);
+            } else {
+                setValue(input);
+            }
             setOperationClicked(false);
             return;
         }
@@ -30,11 +31,6 @@ export const useCalculate = () => {
     };
 
     const onCalculate = (operator: Operator) => {
-        if (!isEdit && isBasicOperation(operator)) {
-            calculator.setOperator(operator);
-            return;
-        }
-        setIsEdit(false);
         setOperationClicked(true);
         const num = calculator.calculate(value, operator);
         setValue(num);
@@ -53,13 +49,4 @@ export const useCalculate = () => {
         onNumberClick,
         onClear,
     };
-};
-
-const isBasicOperation = (operator: Operator): boolean => {
-    return (
-        operator === Operator.addition ||
-        operator === Operator.subtraction ||
-        operator === Operator.multiplication ||
-        operator === Operator.division
-    );
 };
