@@ -38,6 +38,11 @@ export const useCalculate = () => {
 
     const onClear = () => {
         setIsClearable(false);
+        setValue('0');
+    };
+
+    const onAllClear = () => {
+        setIsClearable(false);
         setValue(calculator.clear());
     };
 
@@ -48,5 +53,6 @@ export const useCalculate = () => {
         onCalculate,
         onNumberClick,
         onClear,
+        onAllClear,
     };
 };
