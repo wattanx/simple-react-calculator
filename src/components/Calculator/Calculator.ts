@@ -1,4 +1,4 @@
-import { Engine } from "./Engine";
+import { Engine } from './Engine';
 
 export const Operator = {
     addition: '+',
@@ -23,20 +23,20 @@ export class Calculator {
     private engine = new Engine();
 
     public calculate(value: string, operator: Operator): string {
-        if (this.isPercentage(operator)) { return this.percentage(value); }
+        if (this.isPercentage(operator)) return this.percentage(value);
 
-        if (this.isSign(operator)) { return this.changeSign(value); }
+        if (this.isSign(operator)) return this.changeSign(value);
 
+        // first input
         if (this.prevInputValue === '0' && !this.prevOperator) {
             this.prevInputValue = value;
             this.prevOperator = operator;
             return this.prevInputValue;
         }
 
-        if (this.isEqual(operator)) {
-            return this.handleEqualOperation(value, operator);
-        }
+        if (this.isEqual(operator)) return this.handleEqualOperation(value, operator);
 
+        // Enter a series of equals
         if (this.isEqual(this.prevOperator)) {
             this.updatePreviousValue(value, operator);
             return value;
@@ -52,7 +52,7 @@ export class Calculator {
     public clear(): string {
         this.prevInputValue = '0';
         this.prevOperator = null;
-        return '0'
+        return '0';
     }
 
     private updatePreviousValue(value: string, operator: Operator): void {
@@ -74,15 +74,24 @@ export class Calculator {
     }
 
     private calculateInner(value: string, operator: Operator): string {
-        switch(operator){
+        switch (operator) {
             case Operator.addition:
                 return this.handleOperation(this.engine.add(this.prevInputValue, value), operator);
-            case Operator.subtraction: 
-                return this.handleOperation(this.engine.subtract(this.prevInputValue, value), operator);
+            case Operator.subtraction:
+                return this.handleOperation(
+                    this.engine.subtract(this.prevInputValue, value),
+                    operator,
+                );
             case Operator.multiplication:
-                return this.handleOperation(this.engine.multiply(this.prevInputValue, value), operator);
+                return this.handleOperation(
+                    this.engine.multiply(this.prevInputValue, value),
+                    operator,
+                );
             case Operator.division:
-                return this.handleOperation(this.engine.divide(this.prevInputValue, value), operator);
+                return this.handleOperation(
+                    this.engine.divide(this.prevInputValue, value),
+                    operator,
+                );
             default:
                 return 'Error';
         }

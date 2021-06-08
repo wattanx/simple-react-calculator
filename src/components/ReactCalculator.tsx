@@ -9,17 +9,19 @@ type ComponentProps = {
     onNumberClick: (input: string) => void;
     onCalculate: (operator: Operator) => void;
     onClear: () => void;
+    onAllClear: () => void;
     isClearable: boolean;
     value: string;
 };
 
 export const ReactCalculator: React.FC = () => {
-    const { value, isClearable, onCalculate, onClear, onNumberClick } = useCalculate();
+    const { value, isClearable, onCalculate, onClear, onAllClear, onNumberClick } = useCalculate();
 
     return (
         <CalculatorComponent
             onCalculate={(operator: Operator) => onCalculate(operator)}
             onClear={() => onClear()}
+            onAllClear={() => onAllClear()}
             onNumberClick={(input: string) => onNumberClick(input)}
             isClearable={isClearable}
             value={value}
@@ -32,7 +34,7 @@ const CalculatorComponent: React.FC<ComponentProps> = (props) => (
         <Display value={props.value} />
         <Button
             value={props.isClearable ? 'C' : 'AC'}
-            onClick={() => props.onClear()}
+            onClick={() => (props.isClearable ? props.onClear() : props.onAllClear())}
             backgroundColor={ButtonBackgroundColor.Black}
         />
         <Button
