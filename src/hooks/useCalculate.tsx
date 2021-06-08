@@ -10,7 +10,7 @@ export const useCalculate = () => {
 
     const onNumberClick = (input: string) => {
         if (input === '.' && value.includes('.')) return;
-
+        setOperationClicked(false);
         setIsClearable(true);
 
         if (value === '0' && input !== '.') {
@@ -18,16 +18,12 @@ export const useCalculate = () => {
             return;
         }
 
-        if (isOperationClicked) {
-            if (input === '.') {
-                setValue(value + input);
-            } else {
-                setValue(input);
-            }
-            setOperationClicked(false);
+        if (!isOperationClicked) {
+            setValue(value + input);
             return;
         }
-        setValue(value + input);
+
+        input === '.' ? setValue(value + input) : setValue(input);
     };
 
     const onCalculate = (operator: Operator) => {
