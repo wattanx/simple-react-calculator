@@ -1,12 +1,11 @@
-import { useFontResize } from "@src/hooks/useFontResize";
-import { useEffect, useRef, useState } from "react";
-import styled from "styled-components";
+import { useFontResize } from '@src/hooks/useFontResize';
+import styled from 'styled-components';
 
 type DisplayProps = {
     value: string;
-}
+};
 
-export const Display: React.FC<DisplayProps> = (props) => {
+export const Display: React.VFC<DisplayProps> = (props) => {
     const { divRef, spanRef } = useFontResize(props.value);
 
     return (
@@ -14,8 +13,7 @@ export const Display: React.FC<DisplayProps> = (props) => {
             <StyledSpan ref={spanRef}>{props.value}</StyledSpan>
         </StyledDiv>
     );
-}
-
+};
 
 const StyledDiv = styled.div`
     width: 100%;

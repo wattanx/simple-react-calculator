@@ -16,7 +16,7 @@ type ButtonProps = {
     isSelected?: boolean;
 };
 
-export const Button: React.FC<ButtonProps> = (props) => {
+export const Button: React.VFC<ButtonProps> = (props) => {
     return (
         <StyledButton
             onClick={props.onClick}

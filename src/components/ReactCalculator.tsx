@@ -15,7 +15,7 @@ type ComponentProps = {
     selectedOperator: Operator;
 };
 
-export const ReactCalculator: React.FC = () => {
+export const ReactCalculator: React.VFC = () => {
     const {
         value,
         isClearable,
@@ -39,7 +39,7 @@ export const ReactCalculator: React.FC = () => {
     );
 };
 
-const CalculatorComponent: React.FC<ComponentProps> = (props) => (
+const CalculatorComponent: React.VFC<ComponentProps> = (props) => (
     <StyledDiv>
         <Display value={props.value} />
         <Button
