@@ -12,10 +12,19 @@ type ComponentProps = {
     onAllClear: () => void;
     isClearable: boolean;
     value: string;
+    selectedOperator: Operator;
 };
 
 export const ReactCalculator: React.FC = () => {
-    const { value, isClearable, onCalculate, onClear, onAllClear, onNumberClick } = useCalculate();
+    const {
+        value,
+        isClearable,
+        selectedOperator,
+        onCalculate,
+        onClear,
+        onAllClear,
+        onNumberClick,
+    } = useCalculate();
 
     return (
         <CalculatorComponent
@@ -25,6 +34,7 @@ export const ReactCalculator: React.FC = () => {
             onNumberClick={(input: string) => onNumberClick(input)}
             isClearable={isClearable}
             value={value}
+            selectedOperator={selectedOperator}
         />
     );
 };
@@ -51,6 +61,7 @@ const CalculatorComponent: React.FC<ComponentProps> = (props) => (
             value={'\u00F7'}
             onClick={() => props.onCalculate(Operator.division)}
             backgroundColor={ButtonBackgroundColor.Orange}
+            isSelected={props.selectedOperator === Operator.division}
         />
         <br />
         <Button
@@ -72,6 +83,7 @@ const CalculatorComponent: React.FC<ComponentProps> = (props) => (
             value="x"
             onClick={() => props.onCalculate(Operator.multiplication)}
             backgroundColor={ButtonBackgroundColor.Orange}
+            isSelected={props.selectedOperator === Operator.multiplication}
         />
         <br />
         <Button
@@ -93,6 +105,7 @@ const CalculatorComponent: React.FC<ComponentProps> = (props) => (
             value="-"
             onClick={() => props.onCalculate(Operator.subtraction)}
             backgroundColor={ButtonBackgroundColor.Orange}
+            isSelected={props.selectedOperator === Operator.subtraction}
         />
         <br />
         <Button
@@ -114,6 +127,7 @@ const CalculatorComponent: React.FC<ComponentProps> = (props) => (
             value="+"
             onClick={() => props.onCalculate(Operator.addition)}
             backgroundColor={ButtonBackgroundColor.Orange}
+            isSelected={props.selectedOperator === Operator.addition}
         />
         <br />
         <Button

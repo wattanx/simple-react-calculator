@@ -13,6 +13,7 @@ type ButtonProps = {
     onClick: () => void;
     backgroundColor: ButtonBackgroundColorType;
     isLarge?: boolean;
+    isSelected?: boolean;
 };
 
 export const Button: React.FC<ButtonProps> = (props) => {
@@ -21,6 +22,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
             onClick={props.onClick}
             backgroundColor={props.backgroundColor}
             isLearge={props.isLarge}
+            isSelected={props.isSelected}
         >
             {props.value}
         </StyledButton>
@@ -30,13 +32,14 @@ export const Button: React.FC<ButtonProps> = (props) => {
 const StyledButton = styled.button<{
     backgroundColor: ButtonBackgroundColorType;
     isLearge: boolean;
+    isSelected?: boolean;
 }>`
     background-color: ${(props) => props.backgroundColor};
     color: white;
     width: ${(props) => (props.isLearge ? '50%' : '25%')};
     height: 16%;
     font-size: 6vmin;
-    border-color: black;
+    border: ${(prop) => (prop.isSelected ? '3px solid black' : '1px solid black')};
     padding-left: ${(props) => (props.isLearge ? '12%' : '')};
     text-align: ${(props) => (props.isLearge ? 'left' : '')};
 
