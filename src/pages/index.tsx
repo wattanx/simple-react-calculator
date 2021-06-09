@@ -3,16 +3,17 @@ import Link from 'next/link';
 import { createGlobalStyle } from 'styled-components';
 
 const IndexPage = () => (
-  <>
-    <GlobalStyle />
-    <ReactCalculator />
-  </>
-)
+    <>
+        <GlobalStyle />
+        <ReactCalculator />
+    </>
+);
 
-export default IndexPage
+export default IndexPage;
 
 const GlobalStyle = createGlobalStyle`
   body {
+    height: 100vh;
     margin: 0;
     margin: 0;
     padding: 0;
@@ -22,4 +23,4 @@ const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-`
+`;
