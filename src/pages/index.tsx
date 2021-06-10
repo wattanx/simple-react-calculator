@@ -1,19 +1,24 @@
 import { ReactCalculator } from '@src/components/ReactCalculator';
+import { useHeightResize } from '@src/hooks/useHeightResize';
 import Link from 'next/link';
 import { createGlobalStyle } from 'styled-components';
 
-const IndexPage = () => (
-    <>
-        <GlobalStyle />
-        <ReactCalculator />
-    </>
-);
+const IndexPage = () => {
+    useHeightResize();
+    return (
+        <>
+            <GlobalStyle />
+            <ReactCalculator />
+        </>
+    );
+};
 
 export default IndexPage;
 
 const GlobalStyle = createGlobalStyle`
   body {
     height: 100vh;
+    min-height: calc(var(--vh, 1vh) * 100);
     margin: 0;
     margin: 0;
     padding: 0;
