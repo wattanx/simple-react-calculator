@@ -17,7 +17,7 @@ export default IndexPage;
 
 const GlobalStyle = createGlobalStyle`
   body {
-    height: 100vh;
+    min-height: 100vh;
     min-height: calc(var(--vh, 1vh) * 100);
     margin: 0;
     margin: 0;
