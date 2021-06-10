@@ -12,7 +12,7 @@ export class Engine {
     }
 
     public divide(prevValue: string, value: string): string {
-        if (this.isDivisionByZero(prevValue, value)) { return 'Error'; }
+        if (this.isDivisionByZero(prevValue, value)) return 'Error';
         return (parseFloat(prevValue) / parseFloat(value)).toString();
     }
 
