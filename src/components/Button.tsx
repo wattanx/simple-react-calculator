@@ -14,7 +14,8 @@ type ButtonProps = {
 };
 
 export const Button: React.VFC<
-    ButtonProps & Pick<ChakraButtonProps, 'paddingLeft' | 'textAlign' | 'backgroundColor'>
+    ButtonProps &
+        Pick<ChakraButtonProps, 'paddingLeft' | 'textAlign' | 'backgroundColor' | 'display'>
 > = (props) => {
     return (
         <ChakraButton
@@ -30,6 +31,7 @@ export const Button: React.VFC<
             rounded="none"
             textAlign={props.textAlign}
             paddingLeft={props.paddingLeft}
+            display={props.display}
             onClick={props.onClick}
         >
             {props.value}

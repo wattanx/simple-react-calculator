@@ -1,69 +1,49 @@
-import { Calculator, Operator } from '@src/components/Calculator/Calculator';
+import { Calculator, Operator, OperatorType } from '@src/components/Calculator/Calculator';
 import { useState } from 'react';
 
 const calculator = new Calculator();
 
 export const useCalculate = () => {
     const [value, setValue] = useState<string>('0');
-    const [isOperationClicked, setOperationClicked] = useState<boolean>(false);
     const [isClearable, setIsClearable] = useState<boolean>(false);
-    const [selectedOperator, setSelectedOperator] = useState<Operator>(null);
+    const [selectedOperator, setSelectedOperator] = useState<OperatorType>(null);
 
-    const onNumberClick = (input: string) => {
-        if (input === '.' && value.includes('.')) return;
-        setOperationClicked(false);
-        setIsClearable(true);
-
-        if (value === '0' && input !== '.') {
-            setValue(input);
-            return;
+    const onCalculate = (input: string) => {
+        if (isBasicOperator(input)) {
+            setSelectedOperator(input);
+        } else {
+            if (input === Operator.equal) {
+                setSelectedOperator(null);
+            }
+            setIsClearable(true);
         }
 
-        if (!isOperationClicked) {
-            setValue(value + input);
-            return;
-        }
-
-        input === '.' ? setValue(value + input) : setValue(input);
-    };
-
-    const onCalculate = (operator: Operator) => {
-        if (isBasicOperator(operator)) {
-            setSelectedOperator(operator);
-        }
-        if (operator === Operator.equal) {
-            setSelectedOperator(null);
-        }
-        setOperationClicked(true);
-        const num = calculator.calculate(value, operator);
+        const num = calculator.calculate(input);
         setValue(num);
     };
 
     const onClear = () => {
         setIsClearable(false);
-        setSelectedOperator(null);
-        setValue('0');
+        setValue(calculator.calculate(Operator.clear));
     };
 
     const onAllClear = () => {
         setIsClearable(false);
         setSelectedOperator(null);
-        setValue(calculator.clear());
+        setValue(calculator.calculate(Operator.allClear));
     };
 
     return {
         value,
         isClearable,
-        isOperationClicked,
         selectedOperator,
         onCalculate,
-        onNumberClick,
         onClear,
         onAllClear,
     };
 };
 
-const isBasicOperator = (operator: Operator): boolean => {
+const isBasicOperator = (operator: string): boolean => {
     return (
         operator === Operator.addition ||
         operator === Operator.subtraction ||
