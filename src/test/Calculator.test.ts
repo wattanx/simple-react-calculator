@@ -67,12 +67,13 @@ test('ChangeSign Test', () => {
     expect(calculator.calculate(Operator.sign)).toBe('-10');
 });
 
-// test('clear Test', () => {
-//     const calculator = new Calculator();
-//     expect(calculator.calculate('10', Operator.division)).toBe('10');
-//     expect(calculator.calculate('2', Operator.division)).toBe('5');
-//     expect(calculator.calculate('5', Operator.equal)).toBe('1');
-//     expect(calculator.clear()).toBe('0');
-//     expect(calculator.calculate('10', Operator.division)).toBe('10');
-//     expect(calculator.calculate('2', Operator.division)).toBe('5');
-// });
+test('clear Test', () => {
+    const calculator = new Calculator();
+    expect(calculator.calculate('1')).toBe('1');
+    expect(calculator.calculate('0')).toBe('10');
+    expect(calculator.calculate(Operator.division)).toBe('10');
+    expect(calculator.calculate('2')).toBe('2');
+    expect(calculator.calculate(Operator.clear)).toBe('0');
+    expect(calculator.calculate('2')).toBe('2');
+    expect(calculator.calculate(Operator.equal)).toBe('5');
+});
