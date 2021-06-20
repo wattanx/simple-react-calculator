@@ -1,5 +1,5 @@
+import { Box } from '@chakra-ui/react';
 import { useFontResize } from '@src/hooks/useFontResize';
-import styled from 'styled-components';
 
 type DisplayProps = {
     value: string;
@@ -9,23 +9,20 @@ export const Display: React.VFC<DisplayProps> = (props) => {
     const { divRef, spanRef } = useFontResize(props.value);
 
     return (
-        <StyledDiv ref={divRef}>
-            <StyledSpan ref={spanRef}>{props.value}</StyledSpan>
-        </StyledDiv>
+        <Box
+            w="100%"
+            h="20%"
+            bg="#323232"
+            fontSize="13vmin"
+            color="white"
+            display="flex"
+            alignItems="flex-end"
+            flexDirection="column-reverse"
+            ref={divRef}
+        >
+            <Box margin="16px">
+                <span ref={spanRef}>{props.value}</span>
+            </Box>
+        </Box>
     );
 };
-
-const StyledDiv = styled.div`
-    width: 100%;
-    height: 20%;
-    background-color: #323232;
-    font-size: 14vmin;
-    color: white;
-    display: flex;
-    align-items: flex-end;
-    flex-direction: column-reverse;
-`;
-
-const StyledSpan = styled.span`
-    margin: 16px;
-`;

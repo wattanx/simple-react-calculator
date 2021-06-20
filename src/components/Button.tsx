@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { Button as ChakraButton, ButtonProps as ChakraButtonProps } from '@chakra-ui/button';
 
 export const ButtonBackgroundColor = {
     Black: '#434343',
@@ -6,48 +6,33 @@ export const ButtonBackgroundColor = {
     Orange: '#f2a23c',
 } as const;
 
-type ButtonBackgroundColorType = typeof ButtonBackgroundColor[keyof typeof ButtonBackgroundColor];
-
 type ButtonProps = {
     value: string;
     onClick: () => void;
-    backgroundColor: ButtonBackgroundColorType;
     isLarge?: boolean;
-    isSelected?: boolean;
+    selected?: boolean;
 };
 
-export const Button: React.VFC<ButtonProps> = (props) => {
+export const Button: React.VFC<
+    ButtonProps & Pick<ChakraButtonProps, 'paddingLeft' | 'textAlign' | 'backgroundColor'>
+> = (props) => {
     return (
-        <StyledButton
+        <ChakraButton
+            bg={props.backgroundColor}
+            color="white"
+            w={props.isLarge ? '50%' : '25%'}
+            h="16%"
+            fontSize="6vmin"
+            border={props.selected ? '3px solid black' : '1px solid black'}
+            _focus={{ outline: '0px' }}
+            _active={{ opacity: 0.5 }}
+            _hover={{}}
+            rounded="none"
+            textAlign={props.textAlign}
+            paddingLeft={props.paddingLeft}
             onClick={props.onClick}
-            backgroundColor={props.backgroundColor}
-            isLearge={props.isLarge}
-            isSelected={props.isSelected}
         >
             {props.value}
-        </StyledButton>
+        </ChakraButton>
     );
 };
-
-const StyledButton = styled.button<{
-    backgroundColor: ButtonBackgroundColorType;
-    isLearge: boolean;
-    isSelected?: boolean;
-}>`
-    background-color: ${(props) => props.backgroundColor};
-    color: white;
-    width: ${(props) => (props.isLearge ? '50%' : '25%')};
-    height: 16%;
-    font-size: 6vmin;
-    border: ${(prop) => (prop.isSelected ? '3px solid black' : '1px solid black')};
-    padding-left: ${(props) => (props.isLearge ? '12%' : '')};
-    text-align: ${(props) => (props.isLearge ? 'left' : '')};
-
-    :focus {
-        outline: 0px;
-    }
-
-    :active {
-        opacity: 0.5;
-    }
-`;
