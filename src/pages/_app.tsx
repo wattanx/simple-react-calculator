@@ -5,7 +5,6 @@ const theme = extendTheme({
     styles: {
         global: {
             body: {
-                minHeight: 'calc(var(--vh, 1vh) * 100)',
                 margin: 0,
                 padding: 0,
                 fontFamily:

@@ -3,6 +3,7 @@ import { Box } from '@chakra-ui/react';
 import { Button, ButtonBackgroundColor } from './Button';
 import { Operator } from './Calculator/Calculator';
 import { Display } from './Display';
+import Div100vh from './Div100vh';
 
 type ComponentProps = {
     onNumberClick: (input: string) => void;
@@ -26,20 +27,22 @@ export const ReactCalculator: React.VFC = () => {
     } = useCalculate();
 
     return (
-        <CalculatorComponent
-            onCalculate={(operator: Operator) => onCalculate(operator)}
-            onClear={() => onClear()}
-            onAllClear={() => onAllClear()}
-            onNumberClick={(input: string) => onNumberClick(input)}
-            isClearable={isClearable}
-            value={value}
-            selectedOperator={selectedOperator}
-        />
+        <Div100vh>
+            <CalculatorComponent
+                onCalculate={(operator: Operator) => onCalculate(operator)}
+                onClear={() => onClear()}
+                onAllClear={() => onAllClear()}
+                onNumberClick={(input: string) => onNumberClick(input)}
+                isClearable={isClearable}
+                value={value}
+                selectedOperator={selectedOperator}
+            />
+        </Div100vh>
     );
 };
 
 const CalculatorComponent: React.VFC<ComponentProps> = (props) => (
-    <Box h="calc(var(--vh, 1vh) * 100)" display="block">
+    <Box h="100vh" display="block">
         <Display value={props.value} />
         <Button
             value={props.isClearable ? 'C' : 'AC'}
