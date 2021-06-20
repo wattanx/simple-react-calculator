@@ -10,116 +10,154 @@ export const Operator = {
     equal: '=',
     allClear: 'AC',
     clear: 'C',
-} as const;
+};
 
-export type Operator = typeof Operator[keyof typeof Operator];
+export type OperatorType = typeof Operator[keyof typeof Operator];
 
 export class Calculator {
-    private prevInputValue: string = '0';
-    private prevOperator: Operator;
-    private repeatValue: string = '0';
-    private repeatOperator: Operator;
+    private prevInputValue: string = '';
+    private prevOperator: OperatorType;
+    private prevInputNumber: string = '0';
+    private inputNumber: string = '0';
 
     private engine = new Engine();
 
-    public calculate(value: string, operator: Operator): string {
-        if (this.isPercentage(operator)) return this.percentage(value);
+    public calculate(value: string): string {
+        if (this.isOperation(value)) return this.handleOperationInput(value);
 
-        if (this.isSign(operator)) return this.changeSign(value);
+        return this.handleNumberInput(value);
+    }
 
-        // first input
-        if (this.prevInputValue === '0' && !this.prevOperator) {
+    private handleNumberInput(value: string): string {
+        if (value === '.' && this.inputNumber.includes('.')) return this.inputNumber;
+
+        if (this.isOperation(this.prevInputValue)) {
+            this.inputNumber = '0';
+        }
+
+        if (this.inputNumber === '0' && value !== '.') {
+            this.inputNumber = value;
             this.prevInputValue = value;
-            this.prevOperator = operator;
-            return this.prevInputValue;
+            return this.inputNumber;
         }
 
-        if (this.isEqual(operator)) return this.handleEqualOperation(value, operator);
+        this.inputNumber += value;
+        this.prevInputValue = value;
 
-        // Enter a series of equals
-        if (this.isEqual(this.prevOperator)) {
-            this.updatePreviousValue(value, operator);
-            return value;
+        return this.inputNumber;
+    }
+
+    private handleOperationInput(value: string): string {
+        if (this.prevInputValue === value) return this.inputNumber;
+
+        if (this.isPercentage(value)) return this.percentage();
+
+        if (this.isSign(value)) return this.changeSign();
+
+        if (this.isEqual(value)) return this.handleEqualOperation(this.prevOperator);
+
+        if (this.isClear(value)) return this.clear();
+
+        if (this.isAllClear(value)) return this.allClear();
+
+        if (!this.prevOperator) {
+            this.prevInputValue = value;
+            this.updatePreviousOperator(value);
+            this.updatePreviousInputNumber(this.inputNumber);
+            return this.inputNumber;
         }
 
-        return this.calculateInner(value, operator);
+        return this.calculateInner(value);
     }
 
-    public setOperator(operator: Operator): void {
-        this.prevOperator = operator;
+    private clear(): string {
+        this.inputNumber = '0';
+        return this.inputNumber;
     }
 
-    public clear(): string {
-        this.prevInputValue = '0';
-        this.prevOperator = null;
+    private allClear(): string {
+        this.prevInputNumber = '0';
+        this.prevInputValue = '';
+        this.prevOperator = '';
         return '0';
     }
 
-    private updatePreviousValue(value: string, operator: Operator): void {
-        this.prevInputValue = value;
-        this.prevOperator = operator;
+    private updatePreviousOperator(value: string): void {
+        this.prevOperator = value;
     }
 
-    private handleOperation(result: string, operator: Operator): string {
-        this.updatePreviousValue(result, operator);
-        return this.prevInputValue;
+    private updatePreviousInputNumber(value: string): void {
+        this.prevInputNumber = value;
     }
 
-    private percentage(value: string): string {
-        return this.engine.percentage(value);
+    private handleOperation(result: string): string {
+        this.updatePreviousInputNumber(result);
+        return this.prevInputNumber;
     }
 
-    private changeSign(value: string): string {
-        return this.engine.changeSign(value);
+    private percentage(): string {
+        this.inputNumber = this.engine.percentage(this.inputNumber);
+        return this.inputNumber;
     }
 
-    private calculateInner(value: string, operator: Operator): string {
-        switch (operator) {
+    private changeSign(): string {
+        this.inputNumber = this.engine.changeSign(this.inputNumber);
+        return this.inputNumber;
+    }
+
+    private calculateInner(value: string): string {
+        switch (value) {
             case Operator.addition:
-                return this.handleOperation(this.engine.add(this.prevInputValue, value), operator);
+                return this.handleOperation(
+                    this.engine.add(this.prevInputNumber, this.inputNumber),
+                );
             case Operator.subtraction:
                 return this.handleOperation(
-                    this.engine.subtract(this.prevInputValue, value),
-                    operator,
+                    this.engine.subtract(this.prevInputNumber, this.inputNumber),
                 );
             case Operator.multiplication:
                 return this.handleOperation(
-                    this.engine.multiply(this.prevInputValue, value),
-                    operator,
+                    this.engine.multiply(this.prevInputNumber, this.inputNumber),
                 );
             case Operator.division:
                 return this.handleOperation(
-                    this.engine.divide(this.prevInputValue, value),
-                    operator,
+                    this.engine.divide(this.prevInputNumber, this.inputNumber),
                 );
             default:
                 return 'Error';
         }
     }
 
-    private handleEqualOperation(value: string, operator: Operator): string {
-        if (!this.isEqual(this.prevOperator)) {
-            this.prevInputValue = this.calculateInner(value, this.prevOperator);
-            this.repeatValue = value;
-            this.repeatOperator = this.prevOperator;
-            this.prevOperator = operator;
-            return this.prevInputValue;
-        } else {
-            this.prevInputValue = this.calculateInner(this.repeatValue, this.repeatOperator);
-            this.prevOperator = operator;
-            return this.prevInputValue;
-        }
+    private handleEqualOperation(value: string): string {
+        if (!this.prevOperator) return this.prevInputNumber;
+
+        this.prevInputValue = value;
+        this.prevInputNumber = this.calculateInner(value);
+        this.prevOperator = value;
+        return this.prevInputNumber;
     }
 
-    private isPercentage(oprator: Operator): boolean {
-        return oprator === Operator.percentage;
+    private isPercentage(value: string): boolean {
+        return value === Operator.percentage;
     }
 
-    private isSign(oprator: Operator): boolean {
-        return oprator === Operator.sign;
+    private isSign(value: string): boolean {
+        return value === Operator.sign;
     }
 
-    private isEqual(operator: Operator): boolean {
-        return operator === Operator.equal;
+    private isEqual(value: string): boolean {
+        return value === Operator.equal;
+    }
+
+    private isClear(operator: string): boolean {
+        return operator === Operator.clear;
+    }
+
+    private isAllClear(value: string): boolean {
+        return value === Operator.allClear;
+    }
+
+    private isOperation(value: string): boolean {
+        return Object.values(Operator).includes(value);
     }
 }
