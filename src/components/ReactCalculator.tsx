@@ -39,7 +39,7 @@ export const ReactCalculator: React.VFC = () => {
 };
 
 const CalculatorComponent: React.VFC<ComponentProps> = (props) => (
-    <Box h="100vh" display="block">
+    <Box h="calc(var(--vh, 1vh) * 100)" display="block">
         <Display value={props.value} />
         <Button
             value={props.isClearable ? 'C' : 'AC'}
