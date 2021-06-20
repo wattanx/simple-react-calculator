@@ -1,8 +1,7 @@
 import { useCalculate } from '@src/hooks/useCalculate';
-import { useState } from 'react';
-import styled from 'styled-components';
+import { Box } from '@chakra-ui/react';
 import { Button, ButtonBackgroundColor } from './Button';
-import { Calculator, Operator } from './Calculator/Calculator';
+import { Operator } from './Calculator/Calculator';
 import { Display } from './Display';
 
 type ComponentProps = {
@@ -40,7 +39,7 @@ export const ReactCalculator: React.VFC = () => {
 };
 
 const CalculatorComponent: React.VFC<ComponentProps> = (props) => (
-    <StyledDiv>
+    <Box h="100vh" display="block">
         <Display value={props.value} />
         <Button
             value={props.isClearable ? 'C' : 'AC'}
@@ -61,7 +60,7 @@ const CalculatorComponent: React.VFC<ComponentProps> = (props) => (
             value={'\u00F7'}
             onClick={() => props.onCalculate(Operator.division)}
             backgroundColor={ButtonBackgroundColor.Orange}
-            isSelected={props.selectedOperator === Operator.division}
+            selected={props.selectedOperator === Operator.division}
         />
         <br />
         <Button
@@ -83,7 +82,7 @@ const CalculatorComponent: React.VFC<ComponentProps> = (props) => (
             value="x"
             onClick={() => props.onCalculate(Operator.multiplication)}
             backgroundColor={ButtonBackgroundColor.Orange}
-            isSelected={props.selectedOperator === Operator.multiplication}
+            selected={props.selectedOperator === Operator.multiplication}
         />
         <br />
         <Button
@@ -105,7 +104,7 @@ const CalculatorComponent: React.VFC<ComponentProps> = (props) => (
             value="-"
             onClick={() => props.onCalculate(Operator.subtraction)}
             backgroundColor={ButtonBackgroundColor.Orange}
-            isSelected={props.selectedOperator === Operator.subtraction}
+            selected={props.selectedOperator === Operator.subtraction}
         />
         <br />
         <Button
@@ -127,13 +126,15 @@ const CalculatorComponent: React.VFC<ComponentProps> = (props) => (
             value="+"
             onClick={() => props.onCalculate(Operator.addition)}
             backgroundColor={ButtonBackgroundColor.Orange}
-            isSelected={props.selectedOperator === Operator.addition}
+            selected={props.selectedOperator === Operator.addition}
         />
         <br />
         <Button
             value="0"
             onClick={() => props.onNumberClick('0')}
             backgroundColor={ButtonBackgroundColor.Gray}
+            textAlign="center"
+            paddingLeft="12%"
             isLarge={true}
         />
         <Button
@@ -146,10 +147,5 @@ const CalculatorComponent: React.VFC<ComponentProps> = (props) => (
             onClick={() => props.onCalculate(Operator.equal)}
             backgroundColor={ButtonBackgroundColor.Orange}
         />
-    </StyledDiv>
+    </Box>
 );
-
-const StyledDiv = styled.div`
-    height: 100vh;
-    display: block;
-`;
