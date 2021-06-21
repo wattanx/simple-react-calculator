@@ -48,26 +48,17 @@ export class Calculator {
     }
 
     private handleOperationInput(value: string): string {
-        if (this.prevInputValue === value) return this.inputNumber;
-
         if (this.isPercentage(value)) return this.percentage();
 
         if (this.isSign(value)) return this.changeSign();
-
-        if (this.isEqual(value)) return this.handleEqualOperation(this.prevOperator);
 
         if (this.isClear(value)) return this.clear();
 
         if (this.isAllClear(value)) return this.allClear();
 
-        if (!this.prevOperator) {
-            this.prevInputValue = value;
-            this.updatePreviousOperator(value);
-            this.updatePreviousInputNumber(this.inputNumber);
-            return this.inputNumber;
-        }
+        if (this.isEqual(value)) return this.handleEqualOperation(this.prevOperator);
 
-        return this.calculateInner(value);
+        return this.handleBasicOperation(value);
     }
 
     private clear(): string {
@@ -105,6 +96,25 @@ export class Calculator {
         return this.inputNumber;
     }
 
+    private handleBasicOperation(value: string): string {
+        // first input
+        if (!this.prevOperator) {
+            this.prevInputValue = value;
+            this.updatePreviousOperator(value);
+            this.updatePreviousInputNumber(this.inputNumber);
+            return this.inputNumber;
+        }
+
+        // after equal
+        if (this.isBasicOperator(this.prevInputValue)) {
+            this.prevInputValue = value;
+            this.updatePreviousOperator(value);
+            return this.prevInputNumber;
+        }
+
+        return this.calculateInner(value);
+    }
+
     private calculateInner(value: string): string {
         switch (value) {
             case Operator.addition:
@@ -133,7 +143,6 @@ export class Calculator {
 
         this.prevInputValue = value;
         this.prevInputNumber = this.calculateInner(value);
-        this.prevOperator = value;
         return this.prevInputNumber;
     }
 
@@ -159,5 +168,14 @@ export class Calculator {
 
     private isOperation(value: string): boolean {
         return Object.values(Operator).includes(value);
+    }
+
+    private isBasicOperator(operator: string): boolean {
+        return (
+            operator === Operator.addition ||
+            operator === Operator.subtraction ||
+            operator === Operator.division ||
+            operator === Operator.multiplication
+        );
     }
 }
