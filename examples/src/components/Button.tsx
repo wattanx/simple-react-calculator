@@ -1,4 +1,4 @@
-import { Button as ChakraButton, ButtonProps as ChakraButtonProps } from '@chakra-ui/button';
+import styled from '@emotion/styled';
 
 export const ButtonBackgroundColor = {
     Black: '#434343',
@@ -7,34 +7,47 @@ export const ButtonBackgroundColor = {
 } as const;
 
 type ButtonProps = {
+    backgroundColor: ButtonBackgroundColorType;
     value: string;
     onClick: () => void;
     isLarge?: boolean;
-    selected?: boolean;
+    isSelected?: boolean;
 };
 
-export const Button: React.VFC<
-    ButtonProps &
-        Pick<ChakraButtonProps, 'paddingLeft' | 'textAlign' | 'backgroundColor' | 'display'>
-> = (props) => {
+type ButtonBackgroundColorType = typeof ButtonBackgroundColor[keyof typeof ButtonBackgroundColor];
+
+export const Button: React.VFC<ButtonProps> = (props) => {
     return (
-        <ChakraButton
-            bg={props.backgroundColor}
-            color="white"
-            w={props.isLarge ? '50%' : '25%'}
-            h="16%"
-            fontSize="6vmin"
-            border={props.selected ? '3px solid black' : '1px solid black'}
-            _focus={{ outline: '0px' }}
-            _active={{ opacity: 0.5 }}
-            _hover={{}}
-            rounded="none"
-            textAlign={props.textAlign}
-            paddingLeft={props.paddingLeft}
-            display={props.display}
+        <StyledButton
+            backgroundColor={props.backgroundColor}
+            isLarge={props.isLarge}
+            isSelected={props.isSelected}
             onClick={props.onClick}
         >
             {props.value}
-        </ChakraButton>
+        </StyledButton>
     );
 };
+
+const StyledButton = styled.button<{
+    backgroundColor: ButtonBackgroundColorType;
+    isLarge?: boolean;
+    isSelected?: boolean;
+}>`
+    background-color: ${(props) => props.backgroundColor};
+    color: white;
+    width: ${(props) => (props.isLarge ? '50%' : '25%')};
+    height: 16%;
+    font-size: 6vmin;
+    border: ${(prop) => (prop.isSelected ? '3px solid black' : '1px solid black')};
+    padding-left: ${(props) => (props.isLarge ? '12%' : '')};
+    text-align: ${(props) => (props.isLarge ? 'left' : '')};
+
+    :focus {
+        outline: 0px;
+    }
+
+    :active {
+        opacity: 0.5;
+    }
+`;
