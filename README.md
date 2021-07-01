@@ -8,9 +8,9 @@ Scientific Calculator is not supported.
 
 Purpose of this project to learn React.
 
-## Development
+## Install
 
 ```
-$ yarn install
-$ yarn dev
+$ npm install simple-react-calculator
+$ yarn add simple-react-calculator
 ```
