@@ -1,5 +1,5 @@
 {
-  "name": "react-calculator",
+  "name": "simple-react-calculator",
   "version": "0.1.0",
   "description": "It is a calculator like Mac OS.",
   "main": "dist/cjs/index.js",
