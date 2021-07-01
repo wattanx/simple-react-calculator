@@ -15,10 +15,12 @@
     "framer-motion": "^4",
     "next": "latest",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "simple-react-calculator": "^0.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",
+    "@emotion/babel-preset-css-prop": "^11.2.0",
     "@types/jest": "^26.0.23",
     "@types/node": "^12.12.21",
     "@types/react": "^17.0.2",
