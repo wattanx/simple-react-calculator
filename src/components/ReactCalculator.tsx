@@ -1,4 +1,3 @@
-import React from "react";
 import { useCalculate } from "../hooks/useCalculate";
 import styled from "@emotion/styled";
 import { Button, ButtonBackgroundColor } from "./Button";
