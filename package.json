@@ -1,0 +1,61 @@
+{
+  "name": "react-calculator",
+  "version": "0.1.0",
+  "description": "It is a calculator like Mac OS.",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.ts",
+  "source": "src/index.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/cjs/index.js",
+      "default": "./dist/esm/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build:esm": "cross-env BABEL_ENV=esm babel src --root-mode upward --extensions .ts,.tsx -d dist/esm --source-maps",
+    "build:cjs": "cross-env BABEL_ENV=cjs babel src --root-mode upward --extensions .ts,.tsx -d dist/cjs --source-maps",
+    "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist/types",
+    "build": "concurrently yarn:build:*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wattanx/react-calculator.git"
+  },
+  "author": "wattanx",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/wattanx/react-calculator/issues"
+  },
+  "homepage": "https://github.com/wattanx/react-calculator#readme",
+  "dependencies": {
+    "@babel/cli": "^7.12.0",
+    "@babel/core": "^7.12.10",
+    "@babel/plugin-proposal-class-properties": "^7.12.0",
+    "@babel/preset-env": "^7.12.0",
+    "@babel/preset-react": "^7.12.0",
+    "@babel/preset-typescript": "^7.12.0",
+    "@babel/runtime": "^7.12.0",
+    "concurrently": "^6.2.0",
+    "cross-env": "^7.0.3"
+  },
+  "devDependencies": {
+    "@emotion/react": "^11.4.0",
+    "@emotion/styled": "^11.3.0",
+    "@types/jest": "^26.0.23",
+    "@types/node": "^12.12.21",
+    "@types/react": "^17.0.2",
+    "@types/react-dom": "^17.0.1",
+    "ts-jest": "^27.0.2",
+    "typescript": "4.3.2"
+  },
+  "peerDependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "@emotion/react": "^11.0.0",
+    "@emotion/styled": "^11.0.0"
+  }
+}
