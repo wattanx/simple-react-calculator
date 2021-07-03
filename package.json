@@ -12,6 +12,11 @@
       "default": "./dist/esm/index.js"
     }
   },
+  "keywords": [
+    "react",
+    "calculator",
+    "typescript"
+  ],
   "files": [
     "dist"
   ],
