@@ -19,7 +19,8 @@
     "build:esm": "cross-env BABEL_ENV=esm babel src --root-mode upward --extensions .ts,.tsx -d dist/esm --source-maps",
     "build:cjs": "cross-env BABEL_ENV=cjs babel src --root-mode upward --extensions .ts,.tsx -d dist/cjs --source-maps",
     "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist/types",
-    "build": "concurrently yarn:build:*"
+    "build": "concurrently yarn:build:*",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -49,6 +50,7 @@
     "@types/node": "^12.12.21",
     "@types/react": "^17.0.2",
     "@types/react-dom": "^17.0.1",
+    "jest": "^27.0.6",
     "ts-jest": "^27.0.2",
     "typescript": "4.3.2"
   },
