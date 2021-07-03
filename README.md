@@ -6,8 +6,6 @@ It is a calculator like Mac OS.
 
 Scientific Calculator is not supported.
 
-Purpose of this project to learn React.
-
 ## Install
 
 ```

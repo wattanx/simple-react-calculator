@@ -23,9 +23,11 @@ export class Calculator {
   private engine = new Engine();
 
   public calculate(value: string): string {
-    if (this.isOperation(value)) return this.handleOperationInput(value);
+    this.inputNumber = this.isOperation(value)
+      ? this.handleOperationInput(value)
+      : this.handleNumberInput(value);
 
-    return this.handleNumberInput(value);
+    return this.inputNumber;
   }
 
   private handleNumberInput(value: string): string {
@@ -114,7 +116,10 @@ export class Calculator {
       return this.prevInputNumber;
     }
 
-    return this.calculateInner(value);
+    this.prevInputValue = value;
+    const result = this.calculateInner(this.prevOperator);
+    this.updatePreviousOperator(value);
+    return result;
   }
 
   private calculateInner(value: string): string {
