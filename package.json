@@ -1,6 +1,6 @@
 {
   "name": "simple-react-calculator",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "It is a calculator like Mac OS.",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -34,9 +34,9 @@
   "author": "wattanx",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/wattanx/react-calculator/issues"
+    "url": "https://github.com/wattanx/simple-react-calculator/issues"
   },
-  "homepage": "https://github.com/wattanx/react-calculator#readme",
+  "homepage": "https://github.com/wattanx/simple-react-calculator#readme",
   "dependencies": {
     "@babel/cli": "^7.14.5",
     "@babel/core": "^7.14.6",
