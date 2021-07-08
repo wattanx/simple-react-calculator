@@ -29,7 +29,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wattanx/react-calculator.git"
+    "url": "git+https://github.com/wattanx/simple-react-calculator.git"
   },
   "author": "wattanx",
   "license": "Apache-2.0",
