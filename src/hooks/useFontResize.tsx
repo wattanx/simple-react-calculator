@@ -28,7 +28,12 @@ export const useFontResize = (value: string) => {
         parseFloat(getFontSize()) - 10 + "px";
       reduceFontSize();
     };
-    reduceFontSize();
+    if (
+      (divRef.current as HTMLDivElement).clientWidth !== 0 &&
+      (spanRef.current as HTMLSpanElement).offsetWidth !== 0
+    ) {
+      reduceFontSize();
+    }
   }, [value]);
 
   return {
