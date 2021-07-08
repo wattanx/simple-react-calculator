@@ -1,6 +1,6 @@
 {
   "name": "simple-react-calculator",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "It is a calculator like Mac OS.",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -29,7 +29,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wattanx/react-calculator.git"
+    "url": "git+https://github.com/wattanx/simple-react-calculator.git"
   },
   "author": "wattanx",
   "license": "Apache-2.0",

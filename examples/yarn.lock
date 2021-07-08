@@ -1815,7 +1815,7 @@
   resolved "https://registry.yarnpkg.com/@emotion/memoize/-/memoize-0.7.5.tgz#2c40f81449a4e554e9fc6396910ed4843ec2be50"
   integrity sha512-igX9a37DR2ZPGYtV6suZ6whr8pTFtyHL3K/oLUotxpSVO2ASaprmAe2Dkq7tBo7CRY7MMDrAa9nuQP9/YG8FxQ==
 
-"@emotion/react@^11":
+"@emotion/react@^11.4.0":
   version "11.4.0"
   resolved "https://registry.yarnpkg.com/@emotion/react/-/react-11.4.0.tgz#2465ad7b073a691409b88dfd96dc17097ddad9b7"
   integrity sha512-4XklWsl9BdtatLoJpSjusXhpKv9YVteYKh9hPKP1Sxl+mswEFoUe0WtmtWjxEjkA51DQ2QRMCNOvKcSlCQ7ivg==
@@ -1844,7 +1844,7 @@
   resolved "https://registry.yarnpkg.com/@emotion/sheet/-/sheet-1.0.1.tgz#245f54abb02dfd82326e28689f34c27aa9b2a698"
   integrity sha512-GbIvVMe4U+Zc+929N1V7nW6YYJtidj31lidSmdYcWozwoBIObXBnaJkKNDjZrLm9Nc0BR+ZyHNaRZxqNZbof5g==
 
-"@emotion/styled@^11":
+"@emotion/styled@^11.3.0":
   version "11.3.0"
   resolved "https://registry.yarnpkg.com/@emotion/styled/-/styled-11.3.0.tgz#d63ee00537dfb6ff612e31b0e915c5cf9925a207"
   integrity sha512-fUoLcN3BfMiLlRhJ8CuPUMEyKkLEoM+n+UyAbnqGEsCd5IzKQ7VQFLtzpJOaCD2/VR2+1hXQTnSZXVJeiTNltA==
@@ -6088,10 +6088,10 @@ signal-exit@^3.0.2, signal-exit@^3.0.3:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.3.tgz#a1410c2edd8f077b08b4e253c8eacfcaf057461c"
   integrity sha512-VUJ49FC8U1OxwZLxIbTTrDvLnf/6TDgxZcK8wxR8zs13xpx7xbG60ndBlhNrFi2EMuFRoeDoJO7wthSLq42EjA==
 
-simple-react-calculator@^0.1.5:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/simple-react-calculator/-/simple-react-calculator-0.1.5.tgz#9530dc0a6d15c2982201d50110658a4654556702"
-  integrity sha512-Wp+3sfbbBtMWzqiArKDPcqeMQz78mMALPhhE8cDg3+x9iJwpUfkXcNuhJjwdUmENLzK4o8sv3AEXUiPAQ2ioKQ==
+simple-react-calculator@^0.1.9:
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/simple-react-calculator/-/simple-react-calculator-0.1.9.tgz#7b581799c49ba2b1f149f2a9c34a5f057a4d4173"
+  integrity sha512-qmcS+c1FDfk/Pp+zK4mCQjUwiBbXJpJHTLTV2LDsPFC++scA8Mq3irj68YA5fJR1fYvd7wj7FWYOxAksmoJ1vQ==
   dependencies:
     "@babel/cli" "^7.14.5"
     "@babel/core" "^7.14.6"
