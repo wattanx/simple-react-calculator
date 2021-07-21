@@ -1,4 +1,4 @@
-import { Calculator, Operator } from "../components/Calculator/Calculator";
+import { Calculator, Operator } from "../logic/Calculator";
 
 test("addition Test", () => {
   const calculator = new Calculator();

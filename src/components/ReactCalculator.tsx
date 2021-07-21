@@ -1,7 +1,7 @@
 import { useCalculate } from "../hooks/useCalculate";
 import styled from "@emotion/styled";
 import { Button, ButtonBackgroundColor } from "./Button";
-import { Operator, OperatorType } from "./Calculator/Calculator";
+import { Operator, OperatorType } from "../logic/Calculator";
 import { Display } from "./Display";
 
 type ComponentProps = {

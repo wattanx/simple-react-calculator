@@ -1,8 +1,4 @@
-import {
-  Calculator,
-  Operator,
-  OperatorType,
-} from "../components/Calculator/Calculator";
+import { Calculator, Operator, OperatorType } from "../logic/Calculator";
 import { useState } from "react";
 
 const calculator = new Calculator();

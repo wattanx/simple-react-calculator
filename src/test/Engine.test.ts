@@ -1,4 +1,4 @@
-import { Engine } from "../components/Calculator/Engine";
+import { Engine } from "../logic/Engine";
 
 test("Engine Test", () => {
   const engine = new Engine();
