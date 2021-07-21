@@ -6088,10 +6088,10 @@ signal-exit@^3.0.2, signal-exit@^3.0.3:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.3.tgz#a1410c2edd8f077b08b4e253c8eacfcaf057461c"
   integrity sha512-VUJ49FC8U1OxwZLxIbTTrDvLnf/6TDgxZcK8wxR8zs13xpx7xbG60ndBlhNrFi2EMuFRoeDoJO7wthSLq42EjA==
 
-simple-react-calculator@^0.1.9:
-  version "0.1.9"
-  resolved "https://registry.yarnpkg.com/simple-react-calculator/-/simple-react-calculator-0.1.9.tgz#7b581799c49ba2b1f149f2a9c34a5f057a4d4173"
-  integrity sha512-qmcS+c1FDfk/Pp+zK4mCQjUwiBbXJpJHTLTV2LDsPFC++scA8Mq3irj68YA5fJR1fYvd7wj7FWYOxAksmoJ1vQ==
+simple-react-calculator@^0.1.11:
+  version "0.1.11"
+  resolved "https://registry.yarnpkg.com/simple-react-calculator/-/simple-react-calculator-0.1.11.tgz#a4485efd1fc92f4baebd24ec76791ea9ed0834f2"
+  integrity sha512-wxqykNyvkMOme/XOEPQ/mjOc6qZuAItrjAMdD+kuTGB16oh9uggWmk1IMG1K0auTmhMb+RuHqU366KI+TUjBOQ==
   dependencies:
     "@babel/cli" "^7.14.5"
     "@babel/core" "^7.14.6"
