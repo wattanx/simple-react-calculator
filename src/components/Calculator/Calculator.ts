@@ -146,6 +146,10 @@ export class Calculator {
   }
 
   private handleEqualOperation(value: string): string {
+    if (!this.prevOperator && this.prevInputNumber === "0") {
+      return this.inputNumber;
+    }
+
     if (!this.prevOperator) return this.prevInputNumber;
 
     this.prevInputValue = value;
