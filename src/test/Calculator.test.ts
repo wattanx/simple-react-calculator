@@ -77,3 +77,14 @@ test("clear Test", () => {
   expect(calculator.calculate("2")).toBe("2");
   expect(calculator.calculate(Operator.equal)).toBe("5");
 });
+
+test("allClear Test", () => {
+  const calculator = new Calculator();
+  expect(calculator.calculate("1")).toBe("1");
+  expect(calculator.calculate("0")).toBe("10");
+  expect(calculator.calculate(Operator.division)).toBe("10");
+  expect(calculator.calculate("2")).toBe("2");
+  expect(calculator.calculate(Operator.allClear)).toBe("0");
+  expect(calculator.calculate("2")).toBe("2");
+  expect(calculator.calculate(Operator.equal)).toBe("2");
+});
