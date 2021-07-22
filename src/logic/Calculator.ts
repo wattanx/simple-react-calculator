@@ -1,4 +1,11 @@
-import { Engine } from "./Engine";
+import {
+  add,
+  subtract,
+  multiply,
+  divide,
+  changeSign,
+  percentage,
+} from "./Core";
 import {
   isPercentage,
   isSign,
@@ -28,8 +35,6 @@ export class Calculator {
   private prevOperator: string = "";
   private prevInputNumber: string = "0";
   private inputNumber: string = "0";
-
-  private engine = new Engine();
 
   public calculate(value: string): string {
     this.inputNumber = isOperation(value)
@@ -99,12 +104,12 @@ export class Calculator {
   }
 
   private percentage(): string {
-    this.inputNumber = this.engine.percentage(this.inputNumber);
+    this.inputNumber = percentage(this.inputNumber);
     return this.inputNumber;
   }
 
   private changeSign(): string {
-    this.inputNumber = this.engine.changeSign(this.inputNumber);
+    this.inputNumber = changeSign(this.inputNumber);
     return this.inputNumber;
   }
 
@@ -134,19 +139,19 @@ export class Calculator {
     switch (value) {
       case Operator.addition:
         return this.handleOperation(
-          this.engine.add(this.prevInputNumber, this.inputNumber)
+          add(this.prevInputNumber, this.inputNumber)
         );
       case Operator.subtraction:
         return this.handleOperation(
-          this.engine.subtract(this.prevInputNumber, this.inputNumber)
+          subtract(this.prevInputNumber, this.inputNumber)
         );
       case Operator.multiplication:
         return this.handleOperation(
-          this.engine.multiply(this.prevInputNumber, this.inputNumber)
+          multiply(this.prevInputNumber, this.inputNumber)
         );
       case Operator.division:
         return this.handleOperation(
-          this.engine.divide(this.prevInputNumber, this.inputNumber)
+          divide(this.prevInputNumber, this.inputNumber)
         );
       default:
         return "Error";
