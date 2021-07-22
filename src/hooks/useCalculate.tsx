@@ -6,7 +6,7 @@ const calculator = new Calculator();
 export const useCalculate = () => {
   const [value, setValue] = useState<string>("0");
   const [isClearable, setIsClearable] = useState<boolean>(false);
-  const [selectedOperator, setSelectedOperator] = useState<OperatorType>("");
+  const [selectedOperator, setSelectedOperator] = useState<string>("");
 
   const onCalculate = (input: string) => {
     if (isBasicOperator(input)) {

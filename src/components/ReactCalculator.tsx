@@ -10,7 +10,7 @@ type ComponentProps = {
   onAllClear: () => void;
   isClearable: boolean;
   value: string;
-  selectedOperator: OperatorType;
+  selectedOperator: string;
 };
 
 export const ReactCalculator: React.VFC = () => {

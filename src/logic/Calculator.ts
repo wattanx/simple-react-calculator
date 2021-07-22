@@ -1,4 +1,13 @@
 import { Engine } from "./Engine";
+import {
+  isPercentage,
+  isSign,
+  isEqual,
+  isClear,
+  isAllClear,
+  isOperation,
+  isBasicOperator,
+} from "./Utils";
 
 export const Operator = {
   addition: "+",
@@ -10,20 +19,20 @@ export const Operator = {
   equal: "=",
   allClear: "AC",
   clear: "C",
-};
+} as const;
 
 export type OperatorType = typeof Operator[keyof typeof Operator];
 
 export class Calculator {
   private prevInputValue: string = "";
-  private prevOperator: OperatorType = "";
+  private prevOperator: string = "";
   private prevInputNumber: string = "0";
   private inputNumber: string = "0";
 
   private engine = new Engine();
 
   public calculate(value: string): string {
-    this.inputNumber = this.isOperation(value)
+    this.inputNumber = isOperation(value)
       ? this.handleOperationInput(value)
       : this.handleNumberInput(value);
 
@@ -34,7 +43,7 @@ export class Calculator {
     if (value === "." && this.inputNumber.includes("."))
       return this.inputNumber;
 
-    if (this.isOperation(this.prevInputValue)) {
+    if (isOperation(this.prevInputValue)) {
       this.inputNumber = "0";
     }
 
@@ -51,16 +60,15 @@ export class Calculator {
   }
 
   private handleOperationInput(value: string): string {
-    if (this.isPercentage(value)) return this.percentage();
+    if (isPercentage(value)) return this.percentage();
 
-    if (this.isSign(value)) return this.changeSign();
+    if (isSign(value)) return this.changeSign();
 
-    if (this.isClear(value)) return this.clear();
+    if (isClear(value)) return this.clear();
 
-    if (this.isAllClear(value)) return this.allClear();
+    if (isAllClear(value)) return this.allClear();
 
-    if (this.isEqual(value))
-      return this.handleEqualOperation(this.prevOperator);
+    if (isEqual(value)) return this.handleEqualOperation(this.prevOperator);
 
     return this.handleBasicOperation(value);
   }
@@ -110,7 +118,7 @@ export class Calculator {
     }
 
     // after equal
-    if (this.isBasicOperator(this.prevInputValue)) {
+    if (isBasicOperator(this.prevInputValue)) {
       this.prevInputValue = value;
       this.updatePreviousOperator(value);
       return this.prevInputNumber;
@@ -155,38 +163,5 @@ export class Calculator {
     this.prevInputValue = value;
     this.prevInputNumber = this.calculateInner(value);
     return this.prevInputNumber;
-  }
-
-  private isPercentage(value: string): boolean {
-    return value === Operator.percentage;
-  }
-
-  private isSign(value: string): boolean {
-    return value === Operator.sign;
-  }
-
-  private isEqual(value: string): boolean {
-    return value === Operator.equal;
-  }
-
-  private isClear(operator: string): boolean {
-    return operator === Operator.clear;
-  }
-
-  private isAllClear(value: string): boolean {
-    return value === Operator.allClear;
-  }
-
-  private isOperation(value: string): boolean {
-    return Object.values(Operator).includes(value);
-  }
-
-  private isBasicOperator(operator: string): boolean {
-    return (
-      operator === Operator.addition ||
-      operator === Operator.subtraction ||
-      operator === Operator.division ||
-      operator === Operator.multiplication
-    );
   }
 }
