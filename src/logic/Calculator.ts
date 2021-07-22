@@ -34,34 +34,34 @@ export class Calculator {
   private prevInputValue: string = "";
   private prevOperator: string = "";
   private prevInputNumber: string = "0";
-  private inputNumber: string = "0";
+  private currentDisplayNumber: string = "0";
 
   public calculate(value: string): string {
-    this.inputNumber = isOperation(value)
+    this.currentDisplayNumber = isOperation(value)
       ? this.handleOperationInput(value)
       : this.handleNumberInput(value);
 
-    return this.inputNumber;
+    return this.currentDisplayNumber;
   }
 
   private handleNumberInput(value: string): string {
-    if (value === "." && this.inputNumber.includes("."))
-      return this.inputNumber;
+    if (value === "." && this.currentDisplayNumber.includes("."))
+      return this.currentDisplayNumber;
 
     if (isOperation(this.prevInputValue)) {
-      this.inputNumber = "0";
+      this.currentDisplayNumber = "0";
     }
 
-    if (this.inputNumber === "0" && value !== ".") {
-      this.inputNumber = value;
+    if (this.currentDisplayNumber === "0" && value !== ".") {
+      this.currentDisplayNumber = value;
       this.prevInputValue = value;
-      return this.inputNumber;
+      return this.currentDisplayNumber;
     }
 
-    this.inputNumber += value;
+    this.currentDisplayNumber += value;
     this.prevInputValue = value;
 
-    return this.inputNumber;
+    return this.currentDisplayNumber;
   }
 
   private handleOperationInput(value: string): string {
@@ -79,8 +79,8 @@ export class Calculator {
   }
 
   private clear(): string {
-    this.inputNumber = "0";
-    return this.inputNumber;
+    this.currentDisplayNumber = "0";
+    return this.currentDisplayNumber;
   }
 
   private allClear(): string {
@@ -104,13 +104,13 @@ export class Calculator {
   }
 
   private percentage(): string {
-    this.inputNumber = percentage(this.inputNumber);
-    return this.inputNumber;
+    this.currentDisplayNumber = percentage(this.currentDisplayNumber);
+    return this.currentDisplayNumber;
   }
 
   private changeSign(): string {
-    this.inputNumber = changeSign(this.inputNumber);
-    return this.inputNumber;
+    this.currentDisplayNumber = changeSign(this.currentDisplayNumber);
+    return this.currentDisplayNumber;
   }
 
   private handleBasicOperation(value: string): string {
@@ -118,8 +118,8 @@ export class Calculator {
     if (!this.prevOperator) {
       this.prevInputValue = value;
       this.updatePreviousOperator(value);
-      this.updatePreviousInputNumber(this.inputNumber);
-      return this.inputNumber;
+      this.updatePreviousInputNumber(this.currentDisplayNumber);
+      return this.currentDisplayNumber;
     }
 
     // after equal
@@ -139,19 +139,19 @@ export class Calculator {
     switch (value) {
       case Operator.addition:
         return this.handleOperation(
-          add(this.prevInputNumber, this.inputNumber)
+          add(this.prevInputNumber, this.currentDisplayNumber)
         );
       case Operator.subtraction:
         return this.handleOperation(
-          subtract(this.prevInputNumber, this.inputNumber)
+          subtract(this.prevInputNumber, this.currentDisplayNumber)
         );
       case Operator.multiplication:
         return this.handleOperation(
-          multiply(this.prevInputNumber, this.inputNumber)
+          multiply(this.prevInputNumber, this.currentDisplayNumber)
         );
       case Operator.division:
         return this.handleOperation(
-          divide(this.prevInputNumber, this.inputNumber)
+          divide(this.prevInputNumber, this.currentDisplayNumber)
         );
       default:
         return "Error";
@@ -160,7 +160,7 @@ export class Calculator {
 
   private handleEqualOperation(value: string): string {
     if (!this.prevOperator && this.prevInputNumber === "0") {
-      return this.inputNumber;
+      return this.currentDisplayNumber;
     }
 
     if (!this.prevOperator) return this.prevInputNumber;
