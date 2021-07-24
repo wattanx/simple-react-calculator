@@ -13,11 +13,11 @@ import {
   isEqual,
   isClear,
   isAllClear,
-  isOperation,
+  isCommand,
   isBasicOperator,
 } from "./Utils";
 
-export const Operator = {
+export const Command = {
   Addition: "+",
   Subtraction: "-",
   Multiplication: "x",
@@ -29,16 +29,16 @@ export const Operator = {
   Clear: "C",
 } as const;
 
-export type OperatorType = typeof Operator[keyof typeof Operator];
+export type CommandType = typeof Command[keyof typeof Command];
 
 export class Calculator {
   private prevInputValue: string = "";
-  private prevOperator: string = "";
+  private prevCommand: string = "";
   private prevDisplayNumber: string = "0";
   private currentDisplayNumber: string = "0";
 
   public calculate(value: string): string {
-    this.currentDisplayNumber = isOperation(value)
+    this.currentDisplayNumber = isCommand(value)
       ? this.handleOperationInput(value)
       : this.handleNumberInput(value);
 
@@ -50,7 +50,7 @@ export class Calculator {
       return this.currentDisplayNumber;
     }
 
-    if (isOperation(this.prevInputValue)) {
+    if (isCommand(this.prevInputValue)) {
       this.currentDisplayNumber = "0";
     }
 
@@ -73,7 +73,7 @@ export class Calculator {
 
     if (isAllClear(value)) return this.allClear();
 
-    if (isEqual(value)) return this.handleEqualOperation(this.prevOperator);
+    if (isEqual(value)) return this.handleEqualOperation(this.prevCommand);
 
     return this.handleBasicOperation(value);
   }
@@ -85,7 +85,7 @@ export class Calculator {
   private allClear(): string {
     this.prevDisplayNumber = "0";
     this.prevInputValue = "";
-    this.prevOperator = "";
+    this.prevCommand = "";
     return "0";
   }
 
@@ -93,8 +93,8 @@ export class Calculator {
     this.prevInputValue = value;
   }
 
-  private updatePreviousOperator(value: string): void {
-    this.prevOperator = value;
+  private updatePreviousCommand(value: string): void {
+    this.prevCommand = value;
   }
 
   private updatePreviousDisplayNumber(value: string): void {
@@ -116,9 +116,9 @@ export class Calculator {
 
   private handleBasicOperation(value: string): string {
     // first input
-    if (!this.prevOperator) {
+    if (!this.prevCommand) {
       this.updatePreviousInputValue(value);
-      this.updatePreviousOperator(value);
+      this.updatePreviousCommand(value);
       this.updatePreviousDisplayNumber(this.currentDisplayNumber);
       return this.currentDisplayNumber;
     }
@@ -126,31 +126,31 @@ export class Calculator {
     // after equal
     if (isBasicOperator(this.prevInputValue)) {
       this.updatePreviousInputValue(value);
-      this.updatePreviousOperator(value);
+      this.updatePreviousCommand(value);
       return this.prevDisplayNumber;
     }
 
     this.updatePreviousInputValue(value);
-    const result = this.calculateInner(this.prevOperator);
-    this.updatePreviousOperator(value);
+    const result = this.calculateInner(this.prevCommand);
+    this.updatePreviousCommand(value);
     return result;
   }
 
   private calculateInner(value: string): string {
     switch (value) {
-      case Operator.Addition:
+      case Command.Addition:
         return this.handleOperation(
           add(this.prevDisplayNumber, this.currentDisplayNumber)
         );
-      case Operator.Subtraction:
+      case Command.Subtraction:
         return this.handleOperation(
           subtract(this.prevDisplayNumber, this.currentDisplayNumber)
         );
-      case Operator.Multiplication:
+      case Command.Multiplication:
         return this.handleOperation(
           multiply(this.prevDisplayNumber, this.currentDisplayNumber)
         );
-      case Operator.Division:
+      case Command.Division:
         return this.handleOperation(
           divide(this.prevDisplayNumber, this.currentDisplayNumber)
         );
@@ -160,11 +160,11 @@ export class Calculator {
   }
 
   private handleEqualOperation(value: string): string {
-    if (!this.prevOperator && this.prevDisplayNumber === "0") {
+    if (!this.prevCommand && this.prevDisplayNumber === "0") {
       return this.currentDisplayNumber;
     }
 
-    if (!this.prevOperator) return this.prevDisplayNumber;
+    if (!this.prevCommand) return this.prevDisplayNumber;
 
     this.updatePreviousInputValue(value);
     this.updatePreviousDisplayNumber(this.calculateInner(value));

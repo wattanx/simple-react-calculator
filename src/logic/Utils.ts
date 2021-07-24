@@ -1,34 +1,34 @@
-import { Operator } from ".";
-import { OperatorType } from "./Calculator";
+import { Command } from ".";
+import { CommandType } from "./Calculator";
 export const isPercentage = (value: string) => {
-  return value === Operator.Percentage;
+  return value === Command.Percentage;
 };
 
 export const isSign = (value: string) => {
-  return value === Operator.Sign;
+  return value === Command.Sign;
 };
 
 export const isEqual = (value: string) => {
-  return value === Operator.Equal;
+  return value === Command.Equal;
 };
 
-export const isClear = (operator: string) => {
-  return operator === Operator.Clear;
+export const isClear = (value: string) => {
+  return value === Command.Clear;
 };
 
 export const isAllClear = (value: string) => {
-  return value === Operator.AllClear;
+  return value === Command.AllClear;
 };
 
-export const isOperation = (value: string) => {
-  return Object.values(Operator).includes(<OperatorType>value);
+export const isCommand = (value: string) => {
+  return Object.values(Command).includes(<CommandType>value);
 };
 
-export const isBasicOperator = (operator: string) => {
+export const isBasicOperator = (value: string) => {
   return (
-    operator === Operator.Addition ||
-    operator === Operator.Subtraction ||
-    operator === Operator.Division ||
-    operator === Operator.Multiplication
+    value === Command.Addition ||
+    value === Command.Subtraction ||
+    value === Command.Division ||
+    value === Command.Multiplication
   );
 };

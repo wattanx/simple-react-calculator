@@ -1,7 +1,7 @@
 import { useCalculate } from "../hooks/useCalculate";
 import styled from "@emotion/styled";
 import { Button, ButtonBackgroundColor } from "./Button";
-import { Operator, OperatorType } from "../logic/Calculator";
+import { Command } from "../logic/Calculator";
 import { Display } from "./Display";
 
 type ComponentProps = {
@@ -10,14 +10,14 @@ type ComponentProps = {
   onAllClear: () => void;
   isClearable: boolean;
   value: string;
-  selectedOperator: string;
+  selectedCommand: string;
 };
 
 export const ReactCalculator: React.VFC = () => {
   const {
     value,
     isClearable,
-    selectedOperator,
+    selectedCommand,
     onCalculate,
     onClear,
     onAllClear,
@@ -30,7 +30,7 @@ export const ReactCalculator: React.VFC = () => {
       onAllClear={() => onAllClear()}
       isClearable={isClearable}
       value={value}
-      selectedOperator={selectedOperator}
+      selectedCommand={selectedCommand}
     />
   );
 };
@@ -45,19 +45,19 @@ const CalculatorComponent: React.VFC<ComponentProps> = (props) => (
     />
     <Button
       value="+/-"
-      onClick={() => props.onCalculate(Operator.Sign)}
+      onClick={() => props.onCalculate(Command.Sign)}
       backgroundColor={ButtonBackgroundColor.Black}
     />
     <Button
       value="%"
-      onClick={() => props.onCalculate(Operator.Percentage)}
+      onClick={() => props.onCalculate(Command.Percentage)}
       backgroundColor={ButtonBackgroundColor.Black}
     />
     <Button
       value={"\u00F7"}
-      onClick={() => props.onCalculate(Operator.Division)}
+      onClick={() => props.onCalculate(Command.Division)}
       backgroundColor={ButtonBackgroundColor.Orange}
-      isSelected={props.selectedOperator === Operator.Division}
+      isSelected={props.selectedCommand === Command.Division}
     />
     <br />
     <Button
@@ -77,9 +77,9 @@ const CalculatorComponent: React.VFC<ComponentProps> = (props) => (
     />
     <Button
       value="x"
-      onClick={() => props.onCalculate(Operator.Multiplication)}
+      onClick={() => props.onCalculate(Command.Multiplication)}
       backgroundColor={ButtonBackgroundColor.Orange}
-      isSelected={props.selectedOperator === Operator.Multiplication}
+      isSelected={props.selectedCommand === Command.Multiplication}
     />
     <br />
     <Button
@@ -99,9 +99,9 @@ const CalculatorComponent: React.VFC<ComponentProps> = (props) => (
     />
     <Button
       value="-"
-      onClick={() => props.onCalculate(Operator.Subtraction)}
+      onClick={() => props.onCalculate(Command.Subtraction)}
       backgroundColor={ButtonBackgroundColor.Orange}
-      isSelected={props.selectedOperator === Operator.Subtraction}
+      isSelected={props.selectedCommand === Command.Subtraction}
     />
     <br />
     <Button
@@ -121,9 +121,9 @@ const CalculatorComponent: React.VFC<ComponentProps> = (props) => (
     />
     <Button
       value="+"
-      onClick={() => props.onCalculate(Operator.Addition)}
+      onClick={() => props.onCalculate(Command.Addition)}
       backgroundColor={ButtonBackgroundColor.Orange}
-      isSelected={props.selectedOperator === Operator.Addition}
+      isSelected={props.selectedCommand === Command.Addition}
     />
     <br />
     <Button
@@ -139,7 +139,7 @@ const CalculatorComponent: React.VFC<ComponentProps> = (props) => (
     />
     <Button
       value="="
-      onClick={() => props.onCalculate(Operator.Equal)}
+      onClick={() => props.onCalculate(Command.Equal)}
       backgroundColor={ButtonBackgroundColor.Orange}
     />
   </StyledDiv>
