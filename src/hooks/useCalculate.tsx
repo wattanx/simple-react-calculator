@@ -1,4 +1,5 @@
-import { Calculator, Operator, OperatorType } from "../logic/Calculator";
+import { Calculator, Operator } from "../logic/Calculator";
+import { isBasicOperator } from "../logic/Utils";
 import { useState } from "react";
 
 const calculator = new Calculator();
@@ -12,7 +13,7 @@ export const useCalculate = () => {
     if (isBasicOperator(input)) {
       setSelectedOperator(input);
     } else {
-      if (input === Operator.equal) {
+      if (input === Operator.Equal) {
         setSelectedOperator("");
       }
       setIsClearable(true);
@@ -24,13 +25,13 @@ export const useCalculate = () => {
 
   const onClear = () => {
     setIsClearable(false);
-    setValue(calculator.calculate(Operator.clear));
+    setValue(calculator.calculate(Operator.Clear));
   };
 
   const onAllClear = () => {
     setIsClearable(false);
     setSelectedOperator("");
-    setValue(calculator.calculate(Operator.allClear));
+    setValue(calculator.calculate(Operator.AllClear));
   };
 
   return {
@@ -41,13 +42,4 @@ export const useCalculate = () => {
     onClear,
     onAllClear,
   };
-};
-
-const isBasicOperator = (operator: string): boolean => {
-  return (
-    operator === Operator.addition ||
-    operator === Operator.subtraction ||
-    operator === Operator.division ||
-    operator === Operator.multiplication
-  );
 };
