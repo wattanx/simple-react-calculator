@@ -1,8 +1,5 @@
-import {
-  Calculator,
-  Operator,
-  OperatorType,
-} from "../components/Calculator/Calculator";
+import { Calculator, Command } from "../logic/Calculator";
+import { isBasicOperator } from "../logic/Utils";
 import { useState } from "react";
 
 const calculator = new Calculator();
@@ -10,14 +7,14 @@ const calculator = new Calculator();
 export const useCalculate = () => {
   const [value, setValue] = useState<string>("0");
   const [isClearable, setIsClearable] = useState<boolean>(false);
-  const [selectedOperator, setSelectedOperator] = useState<OperatorType>("");
+  const [selectedCommand, setSelectedCommand] = useState<string>("");
 
   const onCalculate = (input: string) => {
     if (isBasicOperator(input)) {
-      setSelectedOperator(input);
+      setSelectedCommand(input);
     } else {
-      if (input === Operator.equal) {
-        setSelectedOperator("");
+      if (input === Command.Equal) {
+        setSelectedCommand("");
       }
       setIsClearable(true);
     }
@@ -28,30 +25,21 @@ export const useCalculate = () => {
 
   const onClear = () => {
     setIsClearable(false);
-    setValue(calculator.calculate(Operator.clear));
+    setValue(calculator.calculate(Command.Clear));
   };
 
   const onAllClear = () => {
     setIsClearable(false);
-    setSelectedOperator("");
-    setValue(calculator.calculate(Operator.allClear));
+    setSelectedCommand("");
+    setValue(calculator.calculate(Command.AllClear));
   };
 
   return {
     value,
     isClearable,
-    selectedOperator,
+    selectedCommand,
     onCalculate,
     onClear,
     onAllClear,
   };
-};
-
-const isBasicOperator = (operator: string): boolean => {
-  return (
-    operator === Operator.addition ||
-    operator === Operator.subtraction ||
-    operator === Operator.division ||
-    operator === Operator.multiplication
-  );
 };
