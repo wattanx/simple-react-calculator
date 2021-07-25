@@ -99,18 +99,14 @@ export class Calculator {
 
   private handleBasicOperation(value: string): string {
     // first input or after equal
-    if (!this.prevCommand || isBasicOperator(this.prevInputValue)) {
-      this.updatePreviousInputValue(value);
-      this.updatePreviousCommand(value);
-      this.updatePreviousDisplayNumber(this.currentDisplayNumber);
-      return this.currentDisplayNumber;
-    }
-
-    const result = this.calculateInner(
-      this.prevCommand,
-      this.prevDisplayNumber,
-      this.currentDisplayNumber
-    );
+    const result =
+      !this.prevCommand || isBasicOperator(this.prevInputValue)
+        ? this.currentDisplayNumber
+        : this.calculateInner(
+            this.prevCommand,
+            this.prevDisplayNumber,
+            this.currentDisplayNumber
+          );
 
     this.updatePreviousInputValue(value);
     this.updatePreviousDisplayNumber(result);
