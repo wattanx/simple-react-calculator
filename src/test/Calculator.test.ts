@@ -88,3 +88,12 @@ test("allClear Test", () => {
   expect(calculator.calculate("2")).toBe("2");
   expect(calculator.calculate(Command.Equal)).toBe("2");
 });
+
+test("'=' after push '=' Test", () => {
+  const calculator = new Calculator();
+  expect(calculator.calculate("3")).toBe("3");
+  expect(calculator.calculate(Command.Addition)).toBe("3");
+  expect(calculator.calculate("3")).toBe("3");
+  expect(calculator.calculate(Command.Equal)).toBe("6");
+  expect(calculator.calculate(Command.Equal)).toBe("9");
+});

@@ -89,23 +89,6 @@ export class Calculator {
     return "0";
   }
 
-  private updatePreviousInputValue(value: string): void {
-    this.prevInputValue = value;
-  }
-
-  private updatePreviousCommand(value: string): void {
-    this.prevCommand = value;
-  }
-
-  private updatePreviousDisplayNumber(value: string): void {
-    this.prevDisplayNumber = value;
-  }
-
-  private handleOperation(result: string): string {
-    this.updatePreviousDisplayNumber(result);
-    return this.prevDisplayNumber;
-  }
-
   private percentage(): string {
     return percentage(this.currentDisplayNumber);
   }
@@ -115,48 +98,24 @@ export class Calculator {
   }
 
   private handleBasicOperation(value: string): string {
-    // first input
-    if (!this.prevCommand) {
+    // first input or after equal
+    if (!this.prevCommand || isBasicOperator(this.prevInputValue)) {
       this.updatePreviousInputValue(value);
       this.updatePreviousCommand(value);
       this.updatePreviousDisplayNumber(this.currentDisplayNumber);
       return this.currentDisplayNumber;
     }
 
-    // after equal
-    if (isBasicOperator(this.prevInputValue)) {
-      this.updatePreviousInputValue(value);
-      this.updatePreviousCommand(value);
-      return this.prevDisplayNumber;
-    }
+    const result = this.calculateInner(
+      this.prevCommand,
+      this.prevDisplayNumber,
+      this.currentDisplayNumber
+    );
 
     this.updatePreviousInputValue(value);
-    const result = this.calculateInner(this.prevCommand);
+    this.updatePreviousDisplayNumber(result);
     this.updatePreviousCommand(value);
     return result;
-  }
-
-  private calculateInner(value: string): string {
-    switch (value) {
-      case Command.Addition:
-        return this.handleOperation(
-          add(this.prevDisplayNumber, this.currentDisplayNumber)
-        );
-      case Command.Subtraction:
-        return this.handleOperation(
-          subtract(this.prevDisplayNumber, this.currentDisplayNumber)
-        );
-      case Command.Multiplication:
-        return this.handleOperation(
-          multiply(this.prevDisplayNumber, this.currentDisplayNumber)
-        );
-      case Command.Division:
-        return this.handleOperation(
-          divide(this.prevDisplayNumber, this.currentDisplayNumber)
-        );
-      default:
-        return "Error";
-    }
   }
 
   private handleEqualOperation(value: string): string {
@@ -167,7 +126,41 @@ export class Calculator {
     if (!this.prevCommand) return this.prevDisplayNumber;
 
     this.updatePreviousInputValue(value);
-    this.updatePreviousDisplayNumber(this.calculateInner(value));
-    return this.prevDisplayNumber;
+    return this.calculateInner(
+      value,
+      this.prevDisplayNumber,
+      this.currentDisplayNumber
+    );
+  }
+
+  private calculateInner(
+    value: string,
+    prevDisplayNumber: string,
+    currentDisplayNumber: string
+  ): string {
+    switch (value) {
+      case Command.Addition:
+        return add(prevDisplayNumber, currentDisplayNumber);
+      case Command.Subtraction:
+        return subtract(prevDisplayNumber, currentDisplayNumber);
+      case Command.Multiplication:
+        return multiply(prevDisplayNumber, currentDisplayNumber);
+      case Command.Division:
+        return divide(prevDisplayNumber, currentDisplayNumber);
+      default:
+        return "Error";
+    }
+  }
+
+  private updatePreviousInputValue(value: string): void {
+    this.prevInputValue = value;
+  }
+
+  private updatePreviousCommand(value: string): void {
+    this.prevCommand = value;
+  }
+
+  private updatePreviousDisplayNumber(value: string): void {
+    this.prevDisplayNumber = value;
   }
 }
