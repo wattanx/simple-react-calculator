@@ -12,12 +12,10 @@ export const useCalculate = () => {
   const onCalculate = (input: string) => {
     if (isBasicOperator(input)) {
       setSelectedCommand(input);
-    } else {
-      if (input === Command.Equal) {
-        setSelectedCommand("");
-      }
-      setIsClearable(true);
+    } else if (input === Command.Equal) {
+      setSelectedCommand("");
     }
+    setIsClearable(true);
 
     const num = calculator.calculate(input);
     setValue(num);
