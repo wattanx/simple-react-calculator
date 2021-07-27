@@ -54,6 +54,10 @@ export class Calculator {
       this.currentDisplayNumber = "0";
     }
 
+    if (this.isAfterPressingEqual()) {
+      this.prevDisplayNumber = "0";
+    }
+
     if (this.currentDisplayNumber === "0" && value !== ".") {
       this.updatePreviousInputValue(value);
       return value;
@@ -73,7 +77,7 @@ export class Calculator {
 
     if (isAllClear(value)) return this.allClear();
 
-    if (isEqual(value)) return this.handleEqualOperation(this.prevCommand);
+    if (isEqual(value)) return this.handleEqualOperation(value);
 
     return this.handleBasicOperation(value);
   }
@@ -98,9 +102,8 @@ export class Calculator {
   }
 
   private handleBasicOperation(value: string): string {
-    // first input or after equal
     const result =
-      !this.prevCommand || isBasicOperator(this.prevInputValue)
+      this.isFirstInput() || this.isAfterPressingEqual()
         ? this.currentDisplayNumber
         : this.calculateInner(
             this.prevCommand,
@@ -123,7 +126,7 @@ export class Calculator {
 
     this.updatePreviousInputValue(value);
     return this.calculateInner(
-      value,
+      this.prevCommand,
       this.prevDisplayNumber,
       this.currentDisplayNumber
     );
@@ -158,5 +161,13 @@ export class Calculator {
 
   private updatePreviousDisplayNumber(value: string): void {
     this.prevDisplayNumber = value;
+  }
+
+  private isFirstInput(): boolean {
+    return !this.prevCommand;
+  }
+
+  private isAfterPressingEqual(): boolean {
+    return isEqual(this.prevInputValue);
   }
 }

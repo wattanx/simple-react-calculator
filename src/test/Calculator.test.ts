@@ -97,3 +97,13 @@ test("'=' after push '=' Test", () => {
   expect(calculator.calculate(Command.Equal)).toBe("6");
   expect(calculator.calculate(Command.Equal)).toBe("9");
 });
+
+test("'=' after push number Test", () => {
+  const calculator = new Calculator();
+  expect(calculator.calculate("3")).toBe("3");
+  expect(calculator.calculate(Command.Addition)).toBe("3");
+  expect(calculator.calculate("3")).toBe("3");
+  expect(calculator.calculate(Command.Equal)).toBe("6");
+  expect(calculator.calculate("3")).toBe("3");
+  expect(calculator.calculate(Command.Equal)).toBe("3");
+});
