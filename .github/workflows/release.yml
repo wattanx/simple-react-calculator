@@ -1,0 +1,33 @@
+name: Publish to NPM
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release: Release
+  runs-on: ubuntu-latest
+  steps:
+    - name: Checkout Repo
+      uses: actions/checkout@master
+      with:
+        fetch-depth: 0
+
+    - name: Setup Node.js 12.x
+      uses: actions/setup-node@master
+      with:
+        node-version: 12.x
+
+    - name: Install
+      run: npm install
+
+    - name: Test
+      run: npm test
+
+    - name: Build
+      run: npm run build
+
+    - name: Publish
+      run: npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
