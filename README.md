@@ -1,5 +1,9 @@
 # Calculator built with React
 
+[![npm version](https://badge.fury.io/js/simple-react-calculator.svg)](https://badge.fury.io/js/simple-react-calculator)
+![NPM](https://img.shields.io/npm/l/simple-react-calculator)
+![npm bundle size](https://img.shields.io/bundlephobia/minzip/simple-react-calculator)
+
 ![Simple-React-Calculator](./images/calculator.png)
 
 [Demo](https://react-calculator-x.vercel.app/)
