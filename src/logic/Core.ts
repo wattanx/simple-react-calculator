@@ -1,18 +1,21 @@
+import { Big } from "big.js";
+Big.DP = 2;
+
 export const add = (prevValue: string, value: string): string => {
-  return (parseFloat(prevValue) + parseFloat(value)).toString();
+  return new Big(prevValue).plus(value).toString();
 };
 
 export const subtract = (prevValue: string, value: string): string => {
-  return (parseFloat(prevValue) - parseFloat(value)).toString();
+  return new Big(prevValue).minus(value).toString();
 };
 
 export const multiply = (prevValue: string, value: string): string => {
-  return (parseFloat(prevValue) * parseFloat(value)).toString();
+  return new Big(prevValue).mul(value).toString();
 };
 
 export const divide = (prevValue: string, value: string): string => {
   if (isDivisionByZero(prevValue, value)) return "Error";
-  return (parseFloat(prevValue) / parseFloat(value)).toString();
+  return new Big(prevValue).div(value).toString();
 };
 
 export const percentage = (value: string): string => {
