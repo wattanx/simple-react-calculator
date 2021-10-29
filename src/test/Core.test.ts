@@ -21,5 +21,4 @@ test("Engine Test", () => {
 
 test("decimal arithmetic test", () => {
   expect(add("0.1", "0.2")).toBe("0.3");
-  expect(divide("355", "113")).toBe("3.14");
 });
