@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "@emotion/styled";
 import { useFontResize } from "../hooks/useFontResize";
 
@@ -5,7 +6,7 @@ type DisplayProps = {
   value: string;
 };
 
-export const Display: React.VFC<DisplayProps> = (props) => {
+export const Display: React.VFC<DisplayProps> = React.memo((props) => {
   const { divRef, spanRef } = useFontResize(props.value);
 
   return (
@@ -13,7 +14,7 @@ export const Display: React.VFC<DisplayProps> = (props) => {
       <StyledSpan ref={spanRef}>{props.value}</StyledSpan>
     </StyledDiv>
   );
-};
+});
 
 const StyledDiv = styled.div`
   width: 100%;
