@@ -111,6 +111,11 @@ export class Calculator {
             this.currentDisplayNumber
           );
 
+    // first input is operator
+    if (this.prevInputValue === "") {
+      return this.currentDisplayNumber;
+    }
+
     this.updatePreviousInputValue(value);
     this.updatePreviousDisplayNumber(result);
     this.updatePreviousCommand(value);
