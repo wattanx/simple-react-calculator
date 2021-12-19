@@ -14,7 +14,6 @@ import {
   isClear,
   isAllClear,
   isCommand,
-  isBasicOperator,
 } from "./Utils";
 
 export const Command = {
@@ -129,12 +128,15 @@ export class Calculator {
 
     if (!this.prevCommand) return this.prevDisplayNumber;
 
-    this.updatePreviousInputValue(value);
-    return this.calculateInner(
+    const result = this.calculateInner(
       this.prevCommand,
       this.prevDisplayNumber,
       this.currentDisplayNumber
     );
+
+    this.updatePreviousInputValue(value);
+    this.updatePreviousDisplayNumber(this.currentDisplayNumber);
+    return result;
   }
 
   private calculateInner(
