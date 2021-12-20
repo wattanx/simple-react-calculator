@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "@emotion/styled";
 
 export const ButtonBackgroundColor = {
@@ -9,26 +10,26 @@ export const ButtonBackgroundColor = {
 type ButtonProps = {
   backgroundColor: ButtonBackgroundColorType;
   value: string;
-  onClick: () => void;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   isLarge?: boolean;
   isSelected?: boolean;
 };
 
-type ButtonBackgroundColorType =
-  typeof ButtonBackgroundColor[keyof typeof ButtonBackgroundColor];
+type ButtonBackgroundColorType = typeof ButtonBackgroundColor[keyof typeof ButtonBackgroundColor];
 
-export const Button: React.VFC<ButtonProps> = (props) => {
+export const Button: React.VFC<ButtonProps> = React.memo((props) => {
   return (
     <StyledButton
       backgroundColor={props.backgroundColor}
       isLarge={props.isLarge}
       isSelected={props.isSelected}
       onClick={props.onClick}
+      value={props.value}
     >
       {props.value}
     </StyledButton>
   );
-};
+});
 
 const StyledButton = styled.button<{
   backgroundColor: ButtonBackgroundColorType;

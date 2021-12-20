@@ -1,42 +1,56 @@
 import { Calculator, Command } from "../logic/Calculator";
-import { isBasicOperator } from "../logic/Utils";
-import { useState } from "react";
-
-const calculator = new Calculator();
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export const useCalculate = () => {
+  const calculator = useRef<Calculator>(new Calculator());
   const [value, setValue] = useState<string>("0");
   const [isClearable, setIsClearable] = useState<boolean>(false);
   const [selectedCommand, setSelectedCommand] = useState<string>("");
 
-  const onCalculate = (input: string) => {
-    if (isBasicOperator(input)) {
-      setSelectedCommand(input);
-    } else if (input === Command.Equal) {
-      setSelectedCommand("");
-    }
-    setIsClearable(true);
+  useEffect(() => {
+    calculator.current = new Calculator();
 
-    const num = calculator.calculate(input);
+    return () => {
+      calculator.current = new Calculator();
+    };
+  }, []);
+
+  const onClickNumber = useCallback((input: string) => {
+    setIsClearable(true);
+    const num = calculator.current.calculate(input);
     setValue(num);
-  };
+  }, []);
+
+  const onCommand = useCallback((input: string) => {
+    setSelectedCommand(input);
+    const num = calculator.current.calculate(input);
+    setValue(num);
+  }, []);
+
+  const onEqual = useCallback(() => {
+    setSelectedCommand("");
+    const num = calculator.current.calculate(Command.Equal);
+    setValue(num);
+  }, []);
 
   const onClear = () => {
     setIsClearable(false);
-    setValue(calculator.calculate(Command.Clear));
+    setValue(calculator.current.calculate(Command.Clear));
   };
 
   const onAllClear = () => {
     setIsClearable(false);
     setSelectedCommand("");
-    setValue(calculator.calculate(Command.AllClear));
+    setValue(calculator.current.calculate(Command.AllClear));
   };
 
   return {
     value,
     isClearable,
     selectedCommand,
-    onCalculate,
+    onClickNumber,
+    onEqual,
+    onCommand,
     onClear,
     onAllClear,
   };

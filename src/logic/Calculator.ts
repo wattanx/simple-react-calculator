@@ -14,7 +14,6 @@ import {
   isClear,
   isAllClear,
   isCommand,
-  isBasicOperator,
 } from "./Utils";
 
 export const Command = {
@@ -111,6 +110,11 @@ export class Calculator {
             this.currentDisplayNumber
           );
 
+    // first input is operator
+    if (this.prevInputValue === "") {
+      return this.currentDisplayNumber;
+    }
+
     this.updatePreviousInputValue(value);
     this.updatePreviousDisplayNumber(result);
     this.updatePreviousCommand(value);
@@ -124,12 +128,25 @@ export class Calculator {
 
     if (!this.prevCommand) return this.prevDisplayNumber;
 
+    const result = !isEqual(this.prevInputValue)
+      ? this.calculateInner(
+          this.prevCommand,
+          this.prevDisplayNumber,
+          this.currentDisplayNumber
+        )
+      : this.calculateInner(
+          this.prevCommand,
+          this.currentDisplayNumber,
+          this.prevDisplayNumber
+        );
+
+    if (!isEqual(this.prevInputValue)) {
+      this.updatePreviousDisplayNumber(this.currentDisplayNumber);
+    }
+
     this.updatePreviousInputValue(value);
-    return this.calculateInner(
-      this.prevCommand,
-      this.prevDisplayNumber,
-      this.currentDisplayNumber
-    );
+
+    return result;
   }
 
   private calculateInner(
