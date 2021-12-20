@@ -19,7 +19,7 @@
   ],
   "files": [
     "dist",
-    "!*.test.js"
+    "!/dist/**/test/*"
   ],
   "scripts": {
     "build:esm": "cross-env BABEL_ENV=esm babel src --root-mode upward --extensions .ts,.tsx -d dist/esm --source-maps",
