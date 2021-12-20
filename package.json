@@ -1,6 +1,6 @@
 {
   "name": "simple-react-calculator",
-  "version": "0.2.1",
+  "version": "0.3.2",
   "description": "It is a calculator like Mac OS.",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -18,7 +18,8 @@
     "typescript"
   ],
   "files": [
-    "dist"
+    "dist",
+    "!/dist/**/test/*"
   ],
   "scripts": {
     "build:esm": "cross-env BABEL_ENV=esm babel src --root-mode upward --extensions .ts,.tsx -d dist/esm --source-maps",

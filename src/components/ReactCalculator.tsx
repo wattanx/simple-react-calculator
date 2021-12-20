@@ -3,9 +3,12 @@ import styled from "@emotion/styled";
 import { Button, ButtonBackgroundColor } from "./Button";
 import { Command } from "../logic/Calculator";
 import { Display } from "./Display";
+import React, { useCallback } from "react";
 
 type ComponentProps = {
-  onCalculate: (input: string) => void;
+  onClickNumber: (input: string) => void;
+  onEqual: () => void;
+  onCommand: (input: string) => void;
   onClear: () => void;
   onAllClear: () => void;
   isClearable: boolean;
@@ -14,136 +17,140 @@ type ComponentProps = {
 };
 
 export const ReactCalculator: React.VFC = () => {
-  const {
-    value,
-    isClearable,
-    selectedCommand,
-    onCalculate,
-    onClear,
-    onAllClear,
-  } = useCalculate();
+  const props = useCalculate();
 
-  return (
-    <CalculatorComponent
-      onCalculate={(input: string) => onCalculate(input)}
-      onClear={() => onClear()}
-      onAllClear={() => onAllClear()}
-      isClearable={isClearable}
-      value={value}
-      selectedCommand={selectedCommand}
-    />
-  );
+  return <CalculatorComponent {...props} />;
 };
 
-const CalculatorComponent: React.VFC<ComponentProps> = (props) => (
-  <StyledDiv>
-    <Display value={props.value} />
-    <Button
-      value={props.isClearable ? "C" : "AC"}
-      onClick={() => (props.isClearable ? props.onClear() : props.onAllClear())}
-      backgroundColor={ButtonBackgroundColor.Black}
-    />
-    <Button
-      value="+/-"
-      onClick={() => props.onCalculate(Command.Sign)}
-      backgroundColor={ButtonBackgroundColor.Black}
-    />
-    <Button
-      value="%"
-      onClick={() => props.onCalculate(Command.Percentage)}
-      backgroundColor={ButtonBackgroundColor.Black}
-    />
-    <Button
-      value={"\u00F7"}
-      onClick={() => props.onCalculate(Command.Division)}
-      backgroundColor={ButtonBackgroundColor.Orange}
-      isSelected={props.selectedCommand === Command.Division}
-    />
-    <br />
-    <Button
-      value="7"
-      onClick={() => props.onCalculate("7")}
-      backgroundColor={ButtonBackgroundColor.Gray}
-    />
-    <Button
-      value="8"
-      onClick={() => props.onCalculate("8")}
-      backgroundColor={ButtonBackgroundColor.Gray}
-    />
-    <Button
-      value="9"
-      onClick={() => props.onCalculate("9")}
-      backgroundColor={ButtonBackgroundColor.Gray}
-    />
-    <Button
-      value="x"
-      onClick={() => props.onCalculate(Command.Multiplication)}
-      backgroundColor={ButtonBackgroundColor.Orange}
-      isSelected={props.selectedCommand === Command.Multiplication}
-    />
-    <br />
-    <Button
-      value="4"
-      onClick={() => props.onCalculate("4")}
-      backgroundColor={ButtonBackgroundColor.Gray}
-    />
-    <Button
-      value="5"
-      onClick={() => props.onCalculate("5")}
-      backgroundColor={ButtonBackgroundColor.Gray}
-    />
-    <Button
-      value="6"
-      onClick={() => props.onCalculate("6")}
-      backgroundColor={ButtonBackgroundColor.Gray}
-    />
-    <Button
-      value="-"
-      onClick={() => props.onCalculate(Command.Subtraction)}
-      backgroundColor={ButtonBackgroundColor.Orange}
-      isSelected={props.selectedCommand === Command.Subtraction}
-    />
-    <br />
-    <Button
-      value="1"
-      onClick={() => props.onCalculate("1")}
-      backgroundColor={ButtonBackgroundColor.Gray}
-    />
-    <Button
-      value="2"
-      onClick={() => props.onCalculate("2")}
-      backgroundColor={ButtonBackgroundColor.Gray}
-    />
-    <Button
-      value="3"
-      onClick={() => props.onCalculate("3")}
-      backgroundColor={ButtonBackgroundColor.Gray}
-    />
-    <Button
-      value="+"
-      onClick={() => props.onCalculate(Command.Addition)}
-      backgroundColor={ButtonBackgroundColor.Orange}
-      isSelected={props.selectedCommand === Command.Addition}
-    />
-    <br />
-    <Button
-      value="0"
-      onClick={() => props.onCalculate("0")}
-      backgroundColor={ButtonBackgroundColor.Gray}
-      isLarge={true}
-    />
-    <Button
-      value="."
-      onClick={() => props.onCalculate(".")}
-      backgroundColor={ButtonBackgroundColor.Gray}
-    />
-    <Button
-      value="="
-      onClick={() => props.onCalculate(Command.Equal)}
-      backgroundColor={ButtonBackgroundColor.Orange}
-    />
-  </StyledDiv>
-);
+const CalculatorComponent: React.VFC<ComponentProps> = (props) => {
+  const onClear = useCallback(() => {
+    props.isClearable ? props.onClear() : props.onAllClear();
+  }, [props.isClearable, props.onClear, props.onAllClear]);
+
+  const onClickNumber = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      props.onClickNumber(e.currentTarget.value);
+    },
+    [props.onClickNumber]
+  );
+
+  const onCommand = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      props.onCommand(e.currentTarget.value);
+    },
+    [props.onCommand]
+  );
+
+  return (
+    <StyledDiv>
+      <Display value={props.value} />
+      <Button
+        value={props.isClearable ? "C" : "AC"}
+        onClick={onClear}
+        backgroundColor={ButtonBackgroundColor.Black}
+      />
+      <Button
+        value="+/-"
+        onClick={onCommand}
+        backgroundColor={ButtonBackgroundColor.Black}
+      />
+      <Button
+        value="%"
+        onClick={onCommand}
+        backgroundColor={ButtonBackgroundColor.Black}
+      />
+      <Button
+        value={"\u00F7"}
+        onClick={onCommand}
+        backgroundColor={ButtonBackgroundColor.Orange}
+        isSelected={props.selectedCommand === Command.Division}
+      />
+      <br />
+      <Button
+        value="7"
+        onClick={onClickNumber}
+        backgroundColor={ButtonBackgroundColor.Gray}
+      />
+      <Button
+        value="8"
+        onClick={onClickNumber}
+        backgroundColor={ButtonBackgroundColor.Gray}
+      />
+      <Button
+        value="9"
+        onClick={onClickNumber}
+        backgroundColor={ButtonBackgroundColor.Gray}
+      />
+      <Button
+        value="x"
+        onClick={onCommand}
+        backgroundColor={ButtonBackgroundColor.Orange}
+        isSelected={props.selectedCommand === Command.Multiplication}
+      />
+      <br />
+      <Button
+        value="4"
+        onClick={onClickNumber}
+        backgroundColor={ButtonBackgroundColor.Gray}
+      />
+      <Button
+        value="5"
+        onClick={onClickNumber}
+        backgroundColor={ButtonBackgroundColor.Gray}
+      />
+      <Button
+        value="6"
+        onClick={onClickNumber}
+        backgroundColor={ButtonBackgroundColor.Gray}
+      />
+      <Button
+        value="-"
+        onClick={onCommand}
+        backgroundColor={ButtonBackgroundColor.Orange}
+        isSelected={props.selectedCommand === Command.Subtraction}
+      />
+      <br />
+      <Button
+        value="1"
+        onClick={onClickNumber}
+        backgroundColor={ButtonBackgroundColor.Gray}
+      />
+      <Button
+        value="2"
+        onClick={onClickNumber}
+        backgroundColor={ButtonBackgroundColor.Gray}
+      />
+      <Button
+        value="3"
+        onClick={onClickNumber}
+        backgroundColor={ButtonBackgroundColor.Gray}
+      />
+      <Button
+        value="+"
+        onClick={onCommand}
+        backgroundColor={ButtonBackgroundColor.Orange}
+        isSelected={props.selectedCommand === Command.Addition}
+      />
+      <br />
+      <Button
+        value="0"
+        onClick={onClickNumber}
+        backgroundColor={ButtonBackgroundColor.Gray}
+        isLarge={true}
+      />
+      <Button
+        value="."
+        onClick={onCommand}
+        backgroundColor={ButtonBackgroundColor.Gray}
+      />
+      <Button
+        value="="
+        onClick={props.onEqual}
+        backgroundColor={ButtonBackgroundColor.Orange}
+      />
+    </StyledDiv>
+  );
+};
 const StyledDiv = styled.div`
   height: 100vh;
   display: block;
