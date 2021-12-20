@@ -128,14 +128,24 @@ export class Calculator {
 
     if (!this.prevCommand) return this.prevDisplayNumber;
 
-    const result = this.calculateInner(
-      this.prevCommand,
-      this.prevDisplayNumber,
-      this.currentDisplayNumber
-    );
+    const result = !isEqual(this.prevInputValue)
+      ? this.calculateInner(
+          this.prevCommand,
+          this.prevDisplayNumber,
+          this.currentDisplayNumber
+        )
+      : this.calculateInner(
+          this.prevCommand,
+          this.currentDisplayNumber,
+          this.prevDisplayNumber
+        );
+
+    if (!isEqual(this.prevInputValue)) {
+      this.updatePreviousDisplayNumber(this.currentDisplayNumber);
+    }
 
     this.updatePreviousInputValue(value);
-    this.updatePreviousDisplayNumber(this.currentDisplayNumber);
+
     return result;
   }
 
