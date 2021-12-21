@@ -16,7 +16,7 @@
     "next": "latest",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "simple-react-calculator": "^0.3.2"
+    "simple-react-calculator": "^0.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",
