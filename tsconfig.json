@@ -9,5 +9,6 @@
     "forceConsistentCasingInFileNames": true,
     "jsx": "react-jsx"
   },
+  "exclude": ["src/test"],
   "include": ["src/**/*.ts"]
 }
