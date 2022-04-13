@@ -30,7 +30,7 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           REPO: ${{github.repository}}
           COMMIT: ${{github.sha}}
-          run: scripts/release.sh
+        run: scripts/release.sh
 
       - name: Install
         run: npm install
