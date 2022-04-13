@@ -20,6 +20,18 @@ jobs:
           node-version: 12.x
           registry-url: "https://registry.npmjs.org"
 
+      - name: Can Publish
+        run: npx can-npm-publish --verbose
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+
+      - name: check version and add tag
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          REPO: ${{github.repository}}
+          COMMIT: ${{github.sha}}
+          run: scripts/release.sh
+
       - name: Install
         run: npm install
 
