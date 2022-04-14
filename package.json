@@ -39,7 +39,6 @@
   },
   "homepage": "https://github.com/wattanx/simple-react-calculator#readme",
   "dependencies": {
-    "@babel/runtime": "^7.14.6",
     "big.js": "^6.1.1"
   },
   "devDependencies": {
