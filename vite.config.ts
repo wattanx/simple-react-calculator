@@ -15,6 +15,6 @@ export default defineConfig({
       external: [...Object.keys(peerDependencies)],
     },
     target: "esnext",
-    sourcemap: true,
+    sourcemap: false,
   },
 });
