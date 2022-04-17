@@ -15,7 +15,8 @@ type ButtonProps = {
   isSelected?: boolean;
 };
 
-type ButtonBackgroundColorType = typeof ButtonBackgroundColor[keyof typeof ButtonBackgroundColor];
+type ButtonBackgroundColorType =
+  typeof ButtonBackgroundColor[keyof typeof ButtonBackgroundColor];
 
 export const Button: React.VFC<ButtonProps> = React.memo((props) => {
   return (

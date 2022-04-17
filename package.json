@@ -39,7 +39,8 @@
   },
   "homepage": "https://github.com/wattanx/simple-react-calculator#readme",
   "dependencies": {
-    "big.js": "^6.1.1"
+    "big.js": "^6.1.1",
+    "react-hotkeys": "^2.0.0"
   },
   "devDependencies": {
     "@emotion/react": "^11.4.0",
