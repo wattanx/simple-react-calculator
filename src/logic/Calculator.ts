@@ -30,130 +30,132 @@ export const Command = {
 
 export type CommandType = typeof Command[keyof typeof Command];
 
-export class Calculator {
-  private prevInputValue: string = "";
-  private prevCommand: string = "";
-  private prevDisplayNumber: string = "0";
-  private currentDisplayNumber: string = "0";
+export const createCalculator = () => {
+  const state = {
+    prevInputValue: "",
+    prevCommand: "",
+    prevDisplayNumber: "0",
+    currentDisplayNumber: "0",
+  };
 
-  public calculate(value: string): string {
-    this.currentDisplayNumber = isCommand(value)
-      ? this.handleOperationInput(value)
-      : this.handleNumberInput(value);
+  const calculate = (value: string): string => {
+    state.currentDisplayNumber = isCommand(value)
+      ? handleOperationInput(value)
+      : handleNumberInput(value);
 
-    return this.currentDisplayNumber;
-  }
+    return state.currentDisplayNumber;
+  };
 
-  private handleNumberInput(value: string): string {
-    if (value === "." && this.currentDisplayNumber.includes(".")) {
-      return this.currentDisplayNumber;
+  const handleNumberInput = (value: string): string => {
+    if (value === "." && state.currentDisplayNumber.includes(".")) {
+      return state.currentDisplayNumber;
     }
 
-    if (isCommand(this.prevInputValue)) {
-      this.currentDisplayNumber = "0";
+    if (isCommand(state.prevInputValue)) {
+      state.currentDisplayNumber = "0";
     }
 
-    if (this.isAfterPressingEqual()) {
-      this.prevDisplayNumber = "0";
+    if (isAfterPressingEqual()) {
+      state.prevDisplayNumber = "0";
     }
 
-    if (this.currentDisplayNumber === "0" && value !== ".") {
-      this.updatePreviousInputValue(value);
+    if (state.currentDisplayNumber === "0" && value !== ".") {
+      updatePreviousInputValue(value);
       return value;
     }
 
-    this.updatePreviousInputValue(value);
+    updatePreviousInputValue(value);
 
-    return (this.currentDisplayNumber += value);
-  }
+    return (state.currentDisplayNumber += value);
+  };
 
-  private handleOperationInput(value: string): string {
-    if (isPercentage(value)) return this.percentage();
+  const handleOperationInput = (value: string): string => {
+    if (isPercentage(value)) return execPercentage();
 
-    if (isSign(value)) return this.changeSign();
+    if (isSign(value)) return execChangeSign();
 
-    if (isClear(value)) return this.clear();
+    if (isClear(value)) return clear();
 
-    if (isAllClear(value)) return this.allClear();
+    if (isAllClear(value)) return allClear();
 
-    if (isEqual(value)) return this.handleEqualOperation(value);
+    if (isEqual(value)) return handleEqualOperation(value);
 
-    return this.handleBasicOperation(value);
-  }
+    return handleBasicOperation(value);
+  };
 
-  private clear(): string {
+  const clear = (): string => {
     return "0";
-  }
+  };
 
-  private allClear(): string {
-    this.prevDisplayNumber = "0";
-    this.prevInputValue = "";
-    this.prevCommand = "";
+  const allClear = (): string => {
+    state.prevDisplayNumber = "0";
+    state.prevInputValue = "";
+    state.prevCommand = "";
     return "0";
-  }
+  };
 
-  private percentage(): string {
-    return percentage(this.currentDisplayNumber);
-  }
+  const execPercentage = (): string => {
+    return percentage(state.currentDisplayNumber);
+  };
 
-  private changeSign(): string {
-    return changeSign(this.currentDisplayNumber);
-  }
+  const execChangeSign = (): string => {
+    return changeSign(state.currentDisplayNumber);
+  };
 
-  private handleBasicOperation(value: string): string {
+  const handleBasicOperation = (value: string): string => {
     const result =
-      this.isFirstInput() || this.isAfterPressingEqual()
-        ? this.currentDisplayNumber
-        : this.calculateInner(
-            this.prevCommand,
-            this.prevDisplayNumber,
-            this.currentDisplayNumber
+      isFirstInput() || isAfterPressingEqual()
+        ? state.currentDisplayNumber
+        : calculateInner(
+            state.prevCommand,
+            state.prevDisplayNumber,
+            state.currentDisplayNumber
           );
 
     // first input is operator
-    if (this.prevInputValue === "") {
-      return this.currentDisplayNumber;
+    if (state.prevInputValue === "") {
+      return state.currentDisplayNumber;
     }
 
-    this.updatePreviousInputValue(value);
-    this.updatePreviousDisplayNumber(result);
-    this.updatePreviousCommand(value);
+    updatePreviousInputValue(value);
+    updatePreviousDisplayNumber(result);
+    updatePreviousCommand(value);
     return result;
-  }
+  };
 
-  private handleEqualOperation(value: string): string {
-    if (!this.prevCommand && this.prevDisplayNumber === "0") {
-      return this.currentDisplayNumber;
+  const handleEqualOperation = (value: string): string => {
+    if (!state.prevCommand && state.prevDisplayNumber === "0") {
+      return state.currentDisplayNumber;
     }
 
-    if (!this.prevCommand) return this.prevDisplayNumber;
+    if (!state.prevCommand) return state.prevDisplayNumber;
 
-    const result = !isEqual(this.prevInputValue)
-      ? this.calculateInner(
-          this.prevCommand,
-          this.prevDisplayNumber,
-          this.currentDisplayNumber
+    const result = !isEqual(state.prevInputValue)
+      ? calculateInner(
+          state.prevCommand,
+          state.prevDisplayNumber,
+          state.currentDisplayNumber
         )
-      : this.calculateInner(
-          this.prevCommand,
-          this.currentDisplayNumber,
-          this.prevDisplayNumber
+      : calculateInner(
+          state.prevCommand,
+          state.currentDisplayNumber,
+          state.prevDisplayNumber
         );
 
-    if (!isEqual(this.prevInputValue)) {
-      this.updatePreviousDisplayNumber(this.currentDisplayNumber);
+    if (!isEqual(state.prevInputValue)) {
+      updatePreviousDisplayNumber(state.currentDisplayNumber);
     }
 
-    this.updatePreviousInputValue(value);
+    updatePreviousInputValue(value);
 
     return result;
-  }
+  };
 
-  private calculateInner(
+  const calculateInner = (
     value: string,
     prevDisplayNumber: string,
     currentDisplayNumber: string
-  ): string {
+  ): string => {
     switch (value) {
       case Command.Addition:
         return add(prevDisplayNumber, currentDisplayNumber);
@@ -166,25 +168,27 @@ export class Calculator {
       default:
         return "Error";
     }
-  }
+  };
 
-  private updatePreviousInputValue(value: string): void {
-    this.prevInputValue = value;
-  }
+  const updatePreviousInputValue = (value: string): void => {
+    state.prevInputValue = value;
+  };
 
-  private updatePreviousCommand(value: string): void {
-    this.prevCommand = value;
-  }
+  const updatePreviousCommand = (value: string): void => {
+    state.prevCommand = value;
+  };
 
-  private updatePreviousDisplayNumber(value: string): void {
-    this.prevDisplayNumber = value;
-  }
+  const updatePreviousDisplayNumber = (value: string): void => {
+    state.prevDisplayNumber = value;
+  };
 
-  private isFirstInput(): boolean {
-    return !this.prevCommand;
-  }
+  const isFirstInput = (): boolean => {
+    return !state.prevCommand;
+  };
 
-  private isAfterPressingEqual(): boolean {
-    return isEqual(this.prevInputValue);
-  }
-}
+  const isAfterPressingEqual = (): boolean => {
+    return isEqual(state.prevInputValue);
+  };
+
+  return { calculate };
+};

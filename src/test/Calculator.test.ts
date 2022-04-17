@@ -1,7 +1,7 @@
-import { Calculator, Command } from "../logic/Calculator";
+import { createCalculator, Command } from "../logic/Calculator";
 
 test("addition Test", () => {
-  const calculator = new Calculator();
+  const calculator = createCalculator();
   expect(calculator.calculate("1")).toBe("1");
   expect(calculator.calculate("1")).toBe("11");
   expect(calculator.calculate("+")).toBe("11");
@@ -10,7 +10,7 @@ test("addition Test", () => {
 });
 
 test("subtract Test", () => {
-  const calculator = new Calculator();
+  const calculator = createCalculator();
   expect(calculator.calculate("1")).toBe("1");
   expect(calculator.calculate("0")).toBe("10");
   expect(calculator.calculate("-")).toBe("10");
@@ -19,7 +19,7 @@ test("subtract Test", () => {
 });
 
 test("multiply Test", () => {
-  const calculator = new Calculator();
+  const calculator = createCalculator();
   expect(calculator.calculate("1")).toBe("1");
   expect(calculator.calculate("2")).toBe("12");
   expect(calculator.calculate(Command.Multiplication)).toBe("12");
@@ -28,7 +28,7 @@ test("multiply Test", () => {
 });
 
 test("divide Test", () => {
-  const calculator = new Calculator();
+  const calculator = createCalculator();
   expect(calculator.calculate("1")).toBe("1");
   expect(calculator.calculate("0")).toBe("10");
   expect(calculator.calculate(Command.Division)).toBe("10");
@@ -37,7 +37,7 @@ test("divide Test", () => {
 });
 
 test("divisionByZero Test1", () => {
-  const calculator = new Calculator();
+  const calculator = createCalculator();
   expect(calculator.calculate("1")).toBe("1");
   expect(calculator.calculate("0")).toBe("10");
   expect(calculator.calculate(Command.Division)).toBe("10");
@@ -46,7 +46,7 @@ test("divisionByZero Test1", () => {
 });
 
 test("divisionByZero Test2", () => {
-  const calculator = new Calculator();
+  const calculator = createCalculator();
   expect(calculator.calculate("0")).toBe("0");
   expect(calculator.calculate(Command.Division)).toBe("0");
   expect(calculator.calculate("0")).toBe("0");
@@ -54,21 +54,21 @@ test("divisionByZero Test2", () => {
 });
 
 test("percentage Test", () => {
-  const calculator = new Calculator();
+  const calculator = createCalculator();
   expect(calculator.calculate("1")).toBe("1");
   expect(calculator.calculate("0")).toBe("10");
   expect(calculator.calculate(Command.Percentage)).toBe("0.1");
 });
 
 test("ChangeSign Test", () => {
-  const calculator = new Calculator();
+  const calculator = createCalculator();
   expect(calculator.calculate("1")).toBe("1");
   expect(calculator.calculate("0")).toBe("10");
   expect(calculator.calculate(Command.Sign)).toBe("-10");
 });
 
 test("clear Test", () => {
-  const calculator = new Calculator();
+  const calculator = createCalculator();
   expect(calculator.calculate("1")).toBe("1");
   expect(calculator.calculate("0")).toBe("10");
   expect(calculator.calculate(Command.Division)).toBe("10");
@@ -79,7 +79,7 @@ test("clear Test", () => {
 });
 
 test("allClear Test", () => {
-  const calculator = new Calculator();
+  const calculator = createCalculator();
   expect(calculator.calculate("1")).toBe("1");
   expect(calculator.calculate("0")).toBe("10");
   expect(calculator.calculate(Command.Division)).toBe("10");
@@ -90,7 +90,7 @@ test("allClear Test", () => {
 });
 
 test("'=' after push '=' Test", () => {
-  const calculator = new Calculator();
+  const calculator = createCalculator();
   expect(calculator.calculate("3")).toBe("3");
   expect(calculator.calculate(Command.Addition)).toBe("3");
   expect(calculator.calculate("3")).toBe("3");
@@ -99,7 +99,7 @@ test("'=' after push '=' Test", () => {
 });
 
 test("'=' after push number Test", () => {
-  const calculator = new Calculator();
+  const calculator = createCalculator();
   expect(calculator.calculate("3")).toBe("3");
   expect(calculator.calculate(Command.Addition)).toBe("3");
   expect(calculator.calculate("3")).toBe("3");
